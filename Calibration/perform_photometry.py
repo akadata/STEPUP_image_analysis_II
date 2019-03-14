@@ -494,7 +494,7 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
         f.write('#TYPE=Extended\n#OBSERVER=PITT\n#SOFTWARE=STEPUP ' +
                 'Image Analysis\n#DELIM=,\n#DATE=JD\n#OBSTYPE=CCD\n')
         f.write('TARGET,DATE,TARGET MAG,ERROR,FILTER,CHECK LABEL,CHECK MAG,' +
-                'REFERENCE LABEL,REFERENCE MAG,AIRMASS')
+                'REFERENCE LABEL,REFERENCE MAG,AIRMASS\n')
         for date_i, mag, err, cmag, rmag, alt in zip(date_obs, target_mags,
                                                      target_err, cmags, rmags,
                                                      altitudes):
