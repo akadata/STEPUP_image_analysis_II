@@ -493,7 +493,7 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
     with open(path, 'w+') as f:
         f.write('#TYPE=Extended\n#OBSERVER=PITT\n#SOFTWARE=STEPUP ' +
                 'Image Analysis\n#DELIM=,\n#DATE=JD\n#OBSTYPE=CCD\n')
-        f.write('TARGET,DATE,TARGET MAG,ERROR,FILTER,CHECK LABEL,CHECK MAG' +
+        f.write('TARGET,DATE,TARGET MAG,ERROR,FILTER,CHECK LABEL,CHECK MAG,' +
                 'REFERENCE LABEL,REFERENCE MAG,AIRMASS')
         for date_i, mag, err, cmag, rmag, alt in zip(date_obs, target_mags,
                                                      target_err, cmags, rmags,
@@ -666,12 +666,14 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             phot_table['residual_aperture_sum'] = final_sum
 
             # Determine the error in the aperture sum and background level.
-            source_err = np.sqrt(phot_table['residual_aperture_sum'])
+            # source_err = np.sqrt(phot_table['residual_aperture_sum'])
+            source = phot_table['residual_aperture_sum']
 
             bkg_err = np.sqrt(bkg_sum)
 
             aper_sum[i] = phot_table['residual_aperture_sum'][0]
-            err[i] = np.sqrt(source_err ** 2 + bkg_err ** 2)
+            # err[i] = np.sqrt(source_err ** 2 + bkg_err ** 2)
+            err[i] = np.sqrt(source + bkg_sum)
 
             # Determine the time at which the image was taken in Julian Days
             # and the altitude and write them to an array.
