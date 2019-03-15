@@ -117,6 +117,8 @@ def main():
                            aper_rad, ann_in_rad, ann_out_rad)
             # Determine if user has finished running STEPUP Image Analysis.
             cont_analysis = input('\nWould you still like to perform a function? (Y/N): ')
+        print('Goodbye.')
+
     else:
         # Runs which_analysis for function in order of specification in the
         # input-file.txt file if user is not running SIA interactively.
