@@ -136,6 +136,7 @@ def get_filtered_calibimages(dirtarget):
 
     # Retrieve master bias.
     for o_file in calib_files:
+        print(o_file)
         hdulist = fits.open(o_file)
         if hdulist[0].header['IMAGETYP'] == 'Bias Frame':
             mbias.append(fits.getdata(o_file))

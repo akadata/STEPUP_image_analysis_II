@@ -107,7 +107,7 @@ def main():
 
     if interactive == 'Y':
         # Allows user to specify functions to be ran at command line.
-        cont_analysis = input('\nWould you run STEPUP Image Analysis? (Y/N): ')
+        cont_analysis = interactive
         while cont_analysis == 'Y':
             answer = input('\nWhich function would you like to run? (ISR, ASTROM, PHOT): ')
             # Run function specified by "answer" variable.
