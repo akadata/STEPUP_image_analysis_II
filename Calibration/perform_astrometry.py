@@ -38,7 +38,7 @@ def perform_astrometry(target, dirtarget, filters, verbose=False):
 
     # Creates new-images.tab file with positions of stars.
     args = '-vhi' if verbose else '-hi'
-    subprocess.call(['imstar', args, '700', '-tw', 'new-image.fits'])
+    subprocess.call(['imstar', args, '100', '-tw', 'new-image.fits'])
 
     # Gets header with WCS information to append to all images.
     wcsim_hdu = fits.open(os.path.join(dirtarget, 'new-image.fits'))

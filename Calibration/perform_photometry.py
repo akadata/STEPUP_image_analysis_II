@@ -672,7 +672,6 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             bkg_err = np.sqrt(bkg_sum)
 
             aper_sum[i] = phot_table['residual_aperture_sum'][0]
-            # err[i] = np.sqrt(source_err ** 2 + bkg_err ** 2)
             err[i] = np.sqrt(source + bkg_sum)
 
             # Determine the time at which the image was taken in Julian Days
@@ -738,8 +737,8 @@ def multi_filter_analysis(dirtarget, date, target, filters):
                     if line.startswith(target):
                         line = line.split(',')
                         # Saves time and magnitude values for given filter.
-                        date_fil.append(line[1])
-                        mag_fil.append(line[2])
+                        date_fil.append(float(line[1]))
+                        mag_fil.append(float(line[2]))
             dates.append(date_fil)
             mags.append(mag_fil)
 
