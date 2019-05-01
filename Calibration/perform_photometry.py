@@ -290,7 +290,7 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
                         [ref_aper_sum[0][i]] + [err[i]])
 
     with open(path, 'w+') as f:
-        f.write(f'#TARGET,{{C1,C2,...,C{comp_n}}},CHECK,REF,ERR\n')
+        f.write('#TARGET,{{C1,C2,...,C{comp_n}}},CHECK,REF,ERR\n')
         for n in range(len(new_list)):
             row_str = ','.join(map(str, new_list[n]))
             new_str = row_str + "\n"
