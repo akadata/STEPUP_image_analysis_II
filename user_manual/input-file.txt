@@ -1,0 +1,23 @@
+#TARGET=EPIC211638401
+#DATE=2019-01-25
+#FILTERS=r'
+#DIRCALIB='<PATH>'
+#DIRDARK='<PATH>'
+#RA=09:04:47.44
+#DEC=15:15:45.86
+#COMPMAGS=9.940,9.360,10.900
+#COMPRA=9:05:06.00,09:06:35.29,09:06:21.61
+#COMPDEC=15:11:06.57,15:20:38.43,15:16:28.41
+#CLABEL=RandomStar(9.470)
+#CRA=09:04:48.52
+#CDEC=15:22:28.04
+#RLABEL=RandomStar(9.910)
+#RRA=09:06:34.05
+#RDEC=15:07:31.08
+#APERRAD=12
+#ANNINRAD=20
+#ANNOUTRAD=28
+#FUNCTIONS=PHOT
+
+*Last four rows do not need to be specified.
+*I didn't write the part where it checks for dircalib and dirdark, but I am going to define a Boolean that corresponds to whether or not they're the same.
