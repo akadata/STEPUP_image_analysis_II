@@ -156,7 +156,7 @@ If your data has been recorded on the Allegheny Observatory Server, but has not 
 \item Once you have created the \emph{new-image.fits} file as described in Section \ref{sect:newim}, it will be saved in your Downloads folder. Open up a new terminal window and type the command {\bf mv /home/Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}}.
 \end{enumerate}
 
-%%%%%% Preliminary Steps: Allen 302 %%%%%%%%%%%%%%%%%%%%%
+%%%%%% Preliminary Steps: Allegheny Observatory %%%%%%%%%%%%%%%%%%%%%
 \section{Preliminary Steps for Observatory Lab}
 \subsection{Creating Input File (Observatory Lab)}
 \begin{enumerate}
@@ -183,15 +183,6 @@ If your data has been recorded on the Allegheny Observatory Server, but has not 
 \end{figure}
 
 
-%%%%%% Running SIA at Allegheny Observatory %%%%%%%%%%%%%%%%
-\section{Running at Allegheny Observatory}
-
-\begin{enumerate}
-\item This section is specific to running STEPUP Image Analysis in the lab room at Allegheny Observatory. 
-\item First, ensure that your data is stored as described in Section \ref{sect:dataconfig}.
-\end{enumerate}
-
-
 %%%%%% Running SIA in Allen 302 %%%%%%%%%%%%%%%%%%%%%
 \section{Running in Allen 302}
 
@@ -212,6 +203,16 @@ If your data has been recorded on the Allegheny Observatory Server, but has not 
 \item If you observed in two different filters, then you have the option to generate a color light curve. In this case, when running \emph{PHOT}, SIA will ask you if you would like to generate a color light curve. If so, enter {\bf Y}. Then you will be asked which filters you would like to generate the light curve for. Enter the filters as they are given in the headers of the FITS files in the order you would like to subtract them separated by a comma with no spaces. For example, entering {\bf g',r'} corresponds to generating a light curve of $\textrm{g'}-\textrm{r'}$ color.
 \end{enumerate}
 
+
+%%%%%% Running SIA at Allegheny Observatory %%%%%%%%%%%%%%%%
+\section{Running at Allegheny Observatory}
+
+\begin{enumerate}
+\item This section is specific to running STEPUP Image Analysis in the lab room at Allegheny Observatory. 
+\item First, ensure that your data is stored as described in Section \ref{sect:dataconfig}, Item \ref{itm:filelist}.
+\end{enumerate}
+
+
 %%%%%% Running SIA in Thaw 210 %%%%%%%%%%%%%%%%%%%%%
 %\section{Running in Thaw 210}
 
@@ -222,7 +223,7 @@ If your data has been recorded on the Allegheny Observatory Server, but has not 
 %%%%%% Chapter 5: Troubleshooting %%%%%%%%%%%%%%%%%%%%%
 \chapter{Troubleshooting}
 
-\emph{Note:} STEPUP Image Analysis was written in 2017 in Python 3.6.2. The Troubleshooting tips below are written in accordance with the Python 3.6.2 documentation and syntax. 
+\emph{Note:} STEPUP Image Analysis was written in 2017 in Python 3. The Troubleshooting tips below are written in accordance with the Python 3.7 documentation and syntax. 
 
 \section{Instrument Signature Removal}
 \begin{enumerate}

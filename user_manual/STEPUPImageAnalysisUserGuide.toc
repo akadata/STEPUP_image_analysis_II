@@ -12,9 +12,9 @@
 \contentsline {subsection}{\numberline {2.5.2}Generating \emph {new-image.fits} File (Observatory Lab)}{8}
 \contentsline {chapter}{\numberline {3}Running STEPUP Image Analysis}{9}
 \contentsline {section}{\numberline {3.1}Program Flow Chart}{9}
-\contentsline {section}{\numberline {3.2}Running at Allegheny Observatory}{10}
-\contentsline {section}{\numberline {3.3}Running in Allen 302}{10}
-\contentsline {subsection}{\numberline {3.3.1}Generating a Color Light Curve}{10}
+\contentsline {section}{\numberline {3.2}Running in Allen 302}{10}
+\contentsline {subsection}{\numberline {3.2.1}Generating a Color Light Curve}{10}
+\contentsline {section}{\numberline {3.3}Running at Allegheny Observatory}{10}
 \contentsline {chapter}{\numberline {4}Troubleshooting}{11}
 \contentsline {section}{\numberline {4.1}Instrument Signature Removal}{11}
 \contentsline {section}{\numberline {4.2}Perform Astrometry}{11}
