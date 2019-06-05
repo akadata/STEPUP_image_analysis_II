@@ -5,6 +5,7 @@ import ISR
 sys.path.insert(0, 'Calibration')
 import perform_astrometry
 import perform_photometry
+from shutil import copyfile
 
 
 def main():
@@ -204,10 +205,13 @@ def which_analysis(interactive, answer, target, date, filters, coords,
 
     if answer == 'ASTROM':
         im = None
-        if interactive == 'Y':
-            im = input('\nHave you saved a new-image.fits file to the appropriate directory? (Y/N): ')
-        else:
+        try:
+            copyfile(os.path.join(dirtarget, 'new-image.fits'),
+                         os.path.join(dirtarget, 'ISR_Images/new-image.fits'))
             im = 'Y'
+        except FileNotFoundError:
+            print('\nnew-image.fits not found in raw data directory. Goodbye.')
+
         # Determines if user has saved new-image.fits WCS calibration file to
         # ISR_Images directory that was created in ISR function.
         if im == 'Y':

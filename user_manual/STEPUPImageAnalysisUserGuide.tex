@@ -66,7 +66,7 @@ In addition to the steps needed to run SIA, this manual provides an extensive tr
 
 %%%%%% Chapter 2: Preliminary Steps %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Preliminary Steps}
-The preliminary steps to running SIA depend on the location at which it is being run. If you are running SIA from Allegheny Observatory, follow the instructions in Section 2.1. If you are running from the Allen 302, follow the instructions in Section 2.2. If you are running from Thaw 210, follow the instructions in Section 2.3. An example of the input file which must be created as a part of the preliminary steps for all locations is shown below. Refer to this image when generating the input file, as proper formatting is required for SIA to run.  \\
+The preliminary steps to running SIA depend on the location at which it is being run. If you are running SIA from Allegheny Observatory, follow the instructions in Section 2.1. If you are running from Allen 302, follow the instructions in Section 2.2. If you are running from Thaw 210, follow the instructions in Section 2.3. An example of the input file which must be created as a part of the preliminary steps for all locations is shown below. Refer to this image when generating the input file, as proper formatting is required for SIA to run.  \\
 %%%%%% General Preliminary Steps %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[!h]
 \begin{center}
@@ -81,14 +81,21 @@ The preliminary steps to running SIA depend on the location at which it is being
 \begin{enumerate}
 \item All data must be stored in the same directory that is given as input when you run SIA. This includes raw data files, calibration images (including biases, flats, and darks), and the input-file.txt, which the next section explains how to create. {\bf Note:} the dark calibration files \emph{can} be stored in a separate location, but that must be indicated as described in the next section.
 \item There are templates for the input file on every computer SIA is installed on. Directions for copying the files are given at the beginning of each location-specific preliminary setup section. It is also quite easy to create one yourself by creating a new text file and filling it in to match Figure \ref{fig:inputfile}.
+\item For reference, here is a list of all of the files you need in your raw data directory in order for SIA to run:  \label{itm:filelist}
+	\begin{enumerate}
+		\item Raw target data.
+		\item Three types of calibration files (flats, biases, and darks).
+		\item Input file.
+		\item \emph{new-image.fits}.
+	\end{enumerate}
 \end{enumerate}
 
 \section{Creating Input File (General)}
 \label{sect:inputfile}
 \begin{enumerate}
 \item A template for the SIA input file is located in the SIA directory. Copy the input file template to the target directory by typing {\bf copy $\langle$Path to input file$\rangle$ $\langle$Path to target directory$\rangle$}.
-\item Make sure you are {\bf cd}'ed into the target's directory by typing \textbf{chdir} and identifying the last directory in the path as the target directory. Once confirmed, type the command {\bf edit input-file.txt}. Now you will begin editing the file.
-\item First, enter the absolute file paths for the dark calibration files in the {\bf DIRDARK} keyword. The reason there is a separate keyword for the dark calibration images is because it is common that darks are not taken on the same night as flats and biases. Therefore, these may or may not be stored in the same location. If they are stored in the same directory as the other calibration files (in the target directory), just leave this entry blank.
+\item Make sure you are {\bf cd}'ed into the target's directory by typing \textbf{chdir} and identifying the last directory in the path as the target directory. Once confirmed, type the command {\bf gedit input-file.txt} for Linux or {\bf notepad input-file.txt} for Windows. Now you will begin editing the file.
+\item First, enter the absolute file paths for the dark calibration files in the {\bf DIRDARK} keyword. The reason there is a separate keyword for the dark calibration images is because it is common that darks are not taken on the same night as flats and biases. Therefore, these may or may not be stored in the same location as your other calibration files. If they are stored in the same directory as the other calibration files (in the target directory), just leave this entry blank.
 \item Go through the file and input all of the parameters that you're immediately aware of. These should include {\bf DATE, TARGET, RA} and {\bf DEC}. the {\bf RA, DEC} keywords correspond to the J2000 RA and Dec of the target.
 \item Now that you have completed all of the immediately known entries, you must determine {\bf COMPMAGS, COMPRA, COMPDEC, CLABEL, CRA, CDEC, RLABEL, RRA} and {\bf RDEC}. First, try finding this information in a Variable Star Chart on \emph{aavso.org} by following the next few steps. If you find that a Variable Star Chart does not exist for your target, skip to Step \ref{itm:novsp} and use Aladin Lite to find this information.
 \item Once you are on \emph{aavso.org} and logged in, mouse over the \emph{Observing} tab at the top. Under the \emph{Variable Star Charts} option, click on \emph{Variable Star Plotter (VSP)}. 
@@ -98,23 +105,23 @@ The preliminary steps to running SIA depend on the location at which it is being
 \item Also in order from top to bottom, enter the right ascension and declination for each comparison star under the {\bf COMPRA} and {\bf COMPDEC} keywords. They should be in the form {\bf HH:MM:SS} for RA and {\bf DD:MM:SS} for Dec, with each right ascension and declination separated by a comma. There should be no extra spaces before, after, or between any of the entries. \label{itm:compcoord}
 \item Now you will need to choose one ``check" star and one ``reference" star that the program will output data on. Choose any two stars in the image of similar magnitudes and location to the target star that have not been used as comparison stars. It does not matter which is which. For each star, enter its name, RA, and Dec into the {\bf CLABEL, CRA, CDEC, RLABEL, RRA}, and {\bf RDEC} categories, respectively. \label{itm:refinf}
 \item If AAVSO VSP does not have a Variable Star Chart for your target, then you should use Aladin Lite \emph{https://aladin.u-strasbg.fr/AladinLite/} to find information for your comparison, check, and reference stars. First go to this site and in the box at the top left labeled \emph{Target:}, enter in the target's RA and Dec separated by a comma and a space. Then hit \emph{enter}. \label{itm:novsp}
-\item You should now see your target star in the center of the screen. Now, you will have to visually cross-reference stars that you see in the images from the data you are trying to process and the stars in Aladin Lite. Once you have located them in Aladin Life, select one of the three catalogs seen on the right labeled \emph{SIMBAD}, \emph{GAIA DR2}, and \emph{2MASS}. You should see symbols become overlaid on some or all of the stars in the field of view. You can view information on the star according to that catalog by clicking on the symbol. Your goal is to find information on all of the comparison, check and reference stars from the same catalog and the closest bandpass that you observed in. Choose the catalog that best-fulfills this requirement and record their information as in Steps \ref{itm:compmags}, \ref{itm:compcoord}, and \ref{itm:refinf}.
-\item SIA has options to specify aperture and annulus size in the input file. If you would like to enter specific sizes, complete the last three entries {\bf APERRAD, ANNIRAD,} and {\bf ANNOUTRAD}. SIA accepts these keywords in units of arcseconds. If you do not want to specify aperture or annulus size, leave these entries blank. 
-\item SIA has two run options: interactive and non-interactive. If you would like to run the program interactively and manually enter commands as the program runs, then it does not matter what you leave in the {\bf FUNCTIONS} entry, as SIA will not use this for anything. If you would like to run the program non-interactively, then in the {\bf FUNCTIONS} keyword enter comma-delimited functions (ISR, ASTROM, and PHOT) in this consecutive order. For example, your line should read {\bf FUNCTIONS=ISR,ASTROM,PHOT} to run the entire program. 
+\item You should now see your target star in the center of the screen. Now, you will have to visually cross-reference stars that you see in the images from the data you are trying to process and the stars in Aladin Lite. Once you have located them in Aladin Lite, select one of the three catalogs seen on the right labeled \emph{SIMBAD}, \emph{GAIA DR2}, and \emph{2MASS}. You should see symbols become overlaid on some or all of the stars in the field of view. You can view information on the star according to that catalog by clicking on the symbol. Your goal is to find information on all of the comparison, check and reference stars from the same catalog and the closest bandpass that you observed in. Choose the catalog that best-fulfills this requirement and record their information as in Steps \ref{itm:compmags}, \ref{itm:compcoord}, and \ref{itm:refinf}.
+\item SIA has options to specify aperture and annulus size in the input file. If you would like to enter specific sizes, complete the last three entries {\bf APERRAD, ANNIRAD,} and {\bf ANNOUTRAD}. SIA accepts these keywords in units of arcseconds. If you do not want to specify a specific aperture or annulus size, leave these entries blank. 
+\item SIA has two run options: interactive and non-interactive. If you would like to run the program interactively and manually enter commands as the program runs, then it does not matter what you leave in the {\bf FUNCTIONS} entry, as SIA will not use this for anything. If you would like to run the program non-interactively, then in the {\bf FUNCTIONS} keyword enter comma-delimited functions (ISR, ASTROM, and PHOT) in this consecutive order. For example, your line should read {\bf FUNCTIONS=ISR,ASTROM,PHOT} if you would like to run the entire program. 
 \item Now that you have completed all of the entries, verify that the file is in your target directory by {\bf cd}ing into your target directory and then using the {\bf dir} command, which will show you everything in the current directory you are in. It should be saved in the directory exactly as \emph{input-file.txt}. If it is named anything other than that, be sure to change it. 
 \end{enumerate}
 
 \section{Generating \emph{new-image.fits} File (General)}
 \label{sect:newim}
 \begin{enumerate}
-\item To generate this image, go to \emph{astrometry.net}
+\item First, open up a browser and go to \emph{astrometry.net}
 \item Once on their homepage, select the \emph{use} option. 
 \item Now on the \emph{Use the Code} page, select \emph{web}.
-\item At the top of the page you're redirected to, select \emph{Upload}. You will go into the directory that was just created containing all of your instrument signature removed images. It should be called {\bf /home/depot/STEPUP/raw/\emph{name-of-target}/\emph{date-of-observation}} {\bf ISR\_Images/}. Choose any one of the images in there.
+\item At the top of the page you're redirected to, select \emph{Upload}. You will go into the directory containing all of your raw data and choose any of the images.
 \item Once you have chosen your image, select \emph{Upload}. It will take a minute or so for the image to upload, so don't press anything or leave the page until it does.
-\item You will be redirected to a new page. It will take another minute or so for the image to be processed. Once it says \emph{Success}. Click on \emph{Go to results page}.
-\item Under the \emph{Calibration} column along the right side, click on \emph{new-image.fits}. This will save the image to the computer's {\bf Downloads} directory.
-\item Move this image into the directory with your instrument signature removed images by typing {\bf mv /home/Downloads/new-image.fits /home/depot/STEPUP/raw/\emph{name-of-target}/\emph{date-of-observation}/ISR\_Images/}. \textcolor{red}{Type it where? I would clarify that}. Now that this image is the correct directory, enter {\bf Y} to continue.
+\item You will be redirected to a new page. It will usually take only another minute or so for the image to be processed, however it could take longer if the server is busy. Once you see the green \emph{Success} message, click on \emph{Go to results page}.
+\item Under the \emph{Calibration} column along the right side, click on \emph{new-image.fits}. This will save the image to the computer's Downloads directory.
+\item Move this image into the directory with your instrument signature removed images by typing {\bf mv /home/Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}}.
 \end{enumerate}
 
 
@@ -122,15 +129,15 @@ The preliminary steps to running SIA depend on the location at which it is being
 \section{Preliminary Steps for Allen 302}
 
 \subsection{Transferring Data}
-If your data has been recorded in the Allegheny Observatory Server, but has not yet been transferred to the Astro Computing Server in Allen 302, follow the directions below to do so. The directory in these computers where all ASTRON 1263 data is stored is {\bf /home/depot/A1263}. \newline
+If your data has been recorded on the Allegheny Observatory Server, but has not yet been transferred to the Astro Computing Server in Allen 302, follow the directions below to do so. The directory in these computers where all ASTRON 1263 data is stored is {\bf /home/depot/A1263}. \newline
 
 \begin{enumerate}
-\item Log onto Ptolemy in Allen 302. Open up a terminal window by clicking the terminal icon at the top of the screen. If a directory for your target does not exist, use the {\bf mkdir} command to first make a directory for your target in {\bf /home/depot/A1263} by typing {\bf mkdir /home/depot/A1263/\emph{date-of-observation}}. You may possibly need to specialize the sub-directory further than the date, perhaps by adding one of your group-member's initials if this sub-directory name has already been taken.
+\item Log onto Ptolemy in Allen 302. Open up a terminal window by clicking the terminal icon at the top of the screen. If a directory for your target does not exist, use the {\bf mkdir} command to first make a directory for your target in {\bf /home/depot/A1263} by typing {\bf mkdir /home/depot/A1263/\emph{date-of-observation}}. You may possibly need to specialize a sub-directory further than the date, perhaps by adding one of your group-member's within the date sub-directory if any of your classmates have transferred their own data from this date already.
 \item Once there is a directory for your night of observation, use the {\bf cd} command to enter into it. Now, in order to remotely access the data on the observatory computer, type {\bf ftp aoserver1.univ.pitt.edu}. When it prompts you for a name, type \emph{anonymous} and hit enter. When it prompts you for a password, you may type anything and hit enter.
 \item Now you must go to the directory from which you wish to transfer data. Do this by typing {\bf cd \emph{date-of-observation}} and whatever sub-directory names that correspond to the location of your data. If you are unsure of this path name, you could check it by following the remote-access instructions in the Observing Guidelines Manual in a separate terminal window and using the file explorer.
 \item Before you begin copying files, make sure that prompting is turned off so that you do not have to confirm the transfer of each file individually. Do this by typing {\bf prompt}. The setting toggles between on and off, so you may need to type it twice to make sure it says that prompting is turned off.
 \item Next, type {\bf binary}. This changes the mode to transfer.
-\item Finally, to copy the files, use the {\bf mget} command. Type {\bf mget \emph{name-of-target}.fit}. This will transfer all files that have the target name in the title and the ``.fit" extension. If you do not have a copy of the observing report on the Astro Lab computers, be sure to type {\bf mget obsreport.txt} to transfer it as well. 
+\item Finally, to copy the files, use the {\bf mget} command. Type {\bf mget \emph{name-of-target}*.fit}. This will transfer all files that have the target name in the title and the ``.fit" extension.
 \item Type {\bf bye} to log off of the observatory computer.
 \item After typing {\bf bye}, you will automatically revert back to a Ptolemy terminal window. In this window, check to make sure that the files are in the directory that you created by typing {\bf ls}.
 \end{enumerate}
@@ -138,7 +145,7 @@ If your data has been recorded in the Allegheny Observatory Server, but has not 
 \subsection{Creating Input File (Allen 302)}
 \begin{enumerate}
 \item Now, log off of Ptolemy and log on to Geb, which is located adjacent to Ptolemy on the left.
-\item A template of the input file is provided in SIA. Copy the input file template to the target directory by typing {\bf cp /home/depot/STEPUP/} {\bf input-file.txt /home/depot/STEPUP/ \newline raw/\emph{target-name}/\emph{date-of-observation}}. 
+\item A template of the input file is provided in SIA. Copy the input file template to the target directory by typing {\bf cp /home/depot/STEPUP/input-file.txt /home/depot/A1263/}\newline{\bf \emph{data-subdirectory}}. 
 \item Make sure you are {\bf cd}'ed into the target's directory by typing \textbf{pwd}. Once confirmed, type the command {\bf gedit input-file.txt}. Now you will begin editing the file.
 \item From here on, you may follow the steps in Section \ref{sect:inputfile}.
 \end{enumerate}
@@ -146,7 +153,7 @@ If your data has been recorded in the Allegheny Observatory Server, but has not 
 \subsection{Generating \emph{new-image.fits} File (Allen 302)}
 \label{sect:newim302}
 \begin{enumerate}
-\item Once you have created the \emph{new-image.fits} file as described in Section \ref{sect:newim}, it will be saved in your downloads folder. If you have already ran ISR, open up a new terminal window and type the command {\bf mv Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}/ISR\_Images}. If you have not yet run ISR, enter {\bf mv Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}} and be sure to move the file to \emph{ISR\_Images} before running \emph{ASTROM}.
+\item Once you have created the \emph{new-image.fits} file as described in Section \ref{sect:newim}, it will be saved in your Downloads folder. Open up a new terminal window and type the command {\bf mv /home/Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}}.
 \end{enumerate}
 
 %%%%%% Preliminary Steps: Allen 302 %%%%%%%%%%%%%%%%%%%%%
@@ -162,7 +169,7 @@ If your data has been recorded in the Allegheny Observatory Server, but has not 
 
 \subsection{Generating \emph{new-image.fits} File (Observatory Lab)}
 \begin{enumerate}
-\item Once you have created the \emph{new-image.fits} file as described in Section \ref{sect:newim}, it will be saved in your downloads folder. If you have already ran ISR, open up a new terminal window and type the command {\bf mv Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}/ISR\_Images}. If you have not yet run ISR, enter {\bf mv Downloads/new-image.fits /home/depot/A1263/\emph{data-subdirectory}} and be sure to move the file to \emph{ISR\_Images} before running \emph{ASTROM}.
+\item Once you have created the \emph{new-image.fits} file as described in Section \ref{sect:newim}, it will be saved in your Downloads folder. Open up a new terminal window and type the command {\bf mv Downloads/new-image.fits /Z:/data-subdirectory}.
 \end{enumerate}
 
 %%%%%% Chapter 3: Running SIA %%%%%%%%%%%%%%%%%%%%%
@@ -189,13 +196,14 @@ If your data has been recorded in the Allegheny Observatory Server, but has not 
 \section{Running in Allen 302}
 
 \begin{enumerate}
-\item First, ensure that your data is stored as described in Section \ref{sect:dataconfig}.
+\item First, ensure that your data is stored as described in Section \ref{sect:dataconfig}, Item \ref{itm:filelist}.
 \item Open up a new terminal window and type {\bf export PATH=\$PATH:/usr/local/wcstools-3.3.3/bin}.
-\item Next, in the same terminal window type {\bf cd /home/depot/STEPUP/STEPUP\_image}{\bf\_analysis/}. Now that you have entered into the directory containing the code, type the command {\bf python3 main.py}. This will begin running the code.
+\item The, type the command {\bf scl enable rh-python36 bash} to run Python 3.6.
+\item Next, in the same terminal window type {\bf cd /home/depot/STEPUP/STEPUP\_image}\newline{\bf\_analysis\_II}. Now that you have entered into the directory containing the code, type the command {\bf python3 main.py}. This will begin running the code.
 \item You will first be asked what directory your data is contained in. This should be a sub-directory in {\bf /home/depot/A1263}. Enter the absolute path to that directory (case-sensitive).
 \item Next, you will be asked whether you would like to run SIA interactively or not. If so, enter {\bf Y}. If not, enter {\bf N} and SIA will begin to run whatever functions you specified in the \emph{input-file.txt} (case-sensitive).
 \item If you are running SIA interactively, you will next be asked which of the three functions you would like to run, \emph{ISR, ASTROM,} or \emph{PHOT}. Keep in mind that if you have not processed any data yet, you will need to run each function successively. Once you have ran \emph{ISR} and \emph{ASTROM} once you may not run them again (unless you remove all of the output they generated) and you may run \emph{PHOT} as many times as you wish. Enter the function you wish to run as {\bf ISR}, {\bf ASTROM}, or {\bf PHOT}. \label{itm:whichfunc}
-\item Now, SIA should be running whichever function you entered. Note that if you are running \emph{ASTROM}, you will first be prompted on whether you have saved a \emph{new-image.fits} file to the appropriate directory, as specified in Sections \ref{sect:newim} and \ref{sect:newim302}. If so, enter {\bf Y}. If not, generate one as described in Sections \ref{sect:newim} and \ref{sect:newim302} and save it to the appropriate directory and then enter {\bf Y}.
+\item Now, SIA should be running whichever function you entered.
 \item Once the function is finished running, you will be asked if you would like to perform another function. If so, enter {\bf Y}. Then you will be asked which function you would like to run as in Step \ref{itm:whichfunc}. Enter your response according to the description in this step. If you are finished running SIA, enter {\bf N} and SIA will print \emph{Goodbye.} and you will be returned to the terminal command prompt.
 \end{enumerate}
 
@@ -220,6 +228,7 @@ If your data has been recorded in the Allegheny Observatory Server, but has not 
 \begin{enumerate}
 \item {\bf NotADirectoryError}: If you get an error telling you that a certain directory does not exist, it is most likely because you typed something wrong (i.e. capitalizing/not capitalizing letters that should be capital or adding additional spaces). Simply type {\bf python3 main.py} to try again and by \emph{very careful} to make sure you are typing the data directory as you would to {\bf cd} to it in a terminal window, since that is essentially what SIA is doing.
 \item {\bf IsADirectoryError}
+\item {\bf KeywordError}
 \end{enumerate}
 \section{Perform Astrometry}
 \begin{enumerate}

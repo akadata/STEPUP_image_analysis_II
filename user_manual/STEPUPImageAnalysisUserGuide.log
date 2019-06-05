@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  3 MAY 2019 11:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  5 JUN 2019 12:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -269,63 +269,108 @@ File: example.png Graphic file (type png)
  <use example.png>
 Package pdftex.def Info: example.png used on input line 73.
 (pdftex.def)             Requested size: 278.81477pt x 195.13098pt.
- [3
 
- <./example.png>] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 125--126
+
+LaTeX Warning: Reference `fig:inputfile' on page 3 undefined on input line 83.
+
+[3
+
+ <./example.png>]
+
+LaTeX Warning: Reference `itm:novsp' on page 4 undefined on input line 100.
+
+[4]
+
+LaTeX Warning: Reference `itm:compmags' on page 5 undefined on input line 108.
+
+
+LaTeX Warning: Reference `itm:compcoord' on page 5 undefined on input line 108.
+
+
+
+LaTeX Warning: Reference `itm:refinf' on page 5 undefined on input line 108.
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 
  []
 
-[6] [7]
+[6]
+
+LaTeX Warning: Reference `sect:inputfile' on page 7 undefined on input line 150
+.
+
+
+LaTeX Warning: Reference `sect:newim' on page 7 undefined on input line 156.
+
+
+LaTeX Warning: Reference `sect:inputfile' on page 7 undefined on input line 167
+.
+
+
+LaTeX Warning: Reference `sect:newim' on page 7 undefined on input line 172.
+
+[7] [8]
 Chapter 3.
 
 
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./SIA_flow_chart.pdf): PDF i
 nclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<SIA_flow_chart.pdf, id=41, 1228.59pt x 794.97pt>
+<SIA_flow_chart.pdf, id=44, 1228.59pt x 794.97pt>
 File: SIA_flow_chart.pdf Graphic file (type pdf)
  <use SIA_flow_chart.pdf>
-Package pdftex.def Info: SIA_flow_chart.pdf used on input line 174.
+Package pdftex.def Info: SIA_flow_chart.pdf used on input line 181.
 (pdftex.def)             Requested size: 610.6829pt x 395.15501pt.
 
-[8
+[9
 
  <./SIA_flow_chart.pdf>]
-Overfull \hbox (43.2411pt too wide) in paragraph at lines 194--195
-[]\OT1/cmr/m/n/10.95 Next, in the same ter-mi-nal win-dow type \OT1/cmr/bx/n/10
-.95 cd /home/depot/STEPUP/STEPUP[]image[]analysis/\OT1/cmr/m/n/10.95 .
- []
+
+LaTeX Warning: Reference `sect:dataconfig' on page 10 undefined on input line 1
+91.
 
 
-Overfull \hbox (0.27399pt too wide) in paragraph at lines 194--195
-\OT1/cmr/m/n/10.95 Now that you have en-tered into the di-rec-tory con-tain-ing
- the code, type the com-mand \OT1/cmr/bx/n/10.95 python3
- []
+LaTeX Warning: Reference `sect:dataconfig' on page 10 undefined on input line 1
+99.
 
-[9] [10]
+
+LaTeX Warning: Reference `itm:filelist' on page 10 undefined on input line 199.
+
+
+
+LaTeX Warning: Reference `itm:whichfunc' on page 10 undefined on input line 207
+.
+
+[10]
 Chapter 4.
 [11
 
-] (./STEPUPImageAnalysisUserGuide.aux) ) 
+] (./STEPUPImageAnalysisUserGuide.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2793 strings out of 492995
- 40214 string characters out of 6132704
- 111430 words of memory out of 5000000
- 6300 multiletter control sequences out of 15000+600000
+ 2794 strings out of 492995
+ 40228 string characters out of 6132704
+ 111335 words of memory out of 5000000
+ 6301 multiletter control sequences out of 15000+600000
  11481 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,8n,37p,918b,378s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/font
-s/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbxti10.pfb></usr/local/texlive/2017/texmf-dist/font
-s/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2017/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmti12.pfb>
-Output written on STEPUPImageAnalysisUserGuide.pdf (12 pages, 615544 bytes).
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on STEPUPImageAnalysisUserGuide.pdf (12 pages, 592936 bytes).
 PDF statistics:
  108 PDF objects out of 1000 (max. 8388607)
  72 compressed objects within 1 object stream
