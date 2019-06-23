@@ -1,6 +1,4 @@
-# STEPUP_image_analysis_II
-
-<img src="https://github.com/helenarichie/helenarichie/blob/master/images/STEPUP_logo.png" alt="logo" width="200"/>
+# STEPUP_image_analysis_II <img src="https://github.com/helenarichie/helenarichie/blob/master/images/STEPUP_logo.png" alt="logo" width="200"/>
 
 New version of STEPUP Image Analysis (STEPUP_image_analysis) for use at Allegheny Observatory with user manual
 
