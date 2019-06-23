@@ -1,6 +1,8 @@
 # STEPUP_image_analysis_II
 
-![New version of STEPUP Image Analysis (STEPUP_image_analysis) for use at Allegheny Observatory with user manual.](https://github.com/helenarichie/helenarichie/blob/master/images/STEPUP_logo.png =20x20)
+<img src="https://github.com/helenarichie/helenarichie/blob/master/images/STEPUP_logo.png" alt="logo" width="200"/>
+
+New version of STEPUP Image Analysis (STEPUP_image_analysis) for use at Allegheny Observatory with user manual
 
 ## Installation
 To run SIA_II, user must have Python 3 with standard libraries and the following Python packages: NumPy, AstroPy, PhotUtils.
