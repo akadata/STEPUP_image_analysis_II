@@ -289,6 +289,10 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
         comp_sums = list(zip(*comp_aper_sums))
         print(date_obs)
         print(aper_sum[0])
+        print(t_err)
+        print(check_aper_sum[0])
+        print(ref_aper_sum[0])
+        print(altitudes)
         for n, (date_i, tsum, err, csum, rsum, alt) in enumerate(zip(date_obs,
                                                                      aper_sum[0],
                                                                      t_err,
