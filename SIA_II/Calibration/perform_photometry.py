@@ -226,7 +226,6 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     # If check star is not in image, let check_aper_sum = None.
     if len(bad_index) != 0:
         print('Check star either contains nan or non-positive values.')
-        check_aper_sum = None
 
     # Determine if the reference star is not in the image by checking for
     # the presence of nan or negative values.
@@ -242,7 +241,6 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     # If check star is not in image, let ref_aper_sum = None.
     if len(bad_index) != 0:
         print('Reference star either contains nan or non-positive values.')
-        ref_aper_sum = None
 
     return aper_sum, comp_aper_sums, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times
 
