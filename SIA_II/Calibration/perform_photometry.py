@@ -92,6 +92,8 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
         write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
                    altitudes, clabel, check_mags, rlabel, ref_mags, date)
 
+        print(saturated)
+
         print('Saturated images ({}): {}'.format(fil, saturated))
         print('Exposure times ({}): {}'.format(fil, exposure_times))
 
@@ -285,12 +287,6 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
         header_str = '#TARGET NAME,DATE,TARGET COUNTS,ERR,FILTER,(C1,...,C{}) COUNTS,CHECK LABEL,CHECK COUNTS,REFERENCE LABEL,REF COUNTS,AIRMASS\n'.format(comp_n)
         f.write(header_str)
         comp_sums = list(zip(*comp_aper_sums))
-        print(date_obs)
-        print(aper_sum[0])
-        print(t_err)
-        print(check_aper_sum[0])
-        print(ref_aper_sum[0])
-        print(altitudes)
         for n, (date_i, tsum, err, csum, rsum, alt) in enumerate(zip(date_obs,
                                                                      aper_sum[0],
                                                                      t_err,
