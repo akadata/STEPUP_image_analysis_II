@@ -82,7 +82,7 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
 
         aper_sum, comp_aper_sums, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times = photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec, rra, rdec, comp_mags, set_rad, aper_rad, ann_in_rad, ann_out_rad)
 
-        write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum, check_aper_sum, ref_aper_sum, err)
+        write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, target, clabel, rlabel)
 
         target_mags, target_err, check_mags, ref_mags = counts_to_mag(aper_sum, comp_aper_sums, err, final_comp_mags, check_aper_sum, ref_aper_sum, fil, date_obs)
 
@@ -248,7 +248,8 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
 
 
 def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
-                     check_aper_sum, ref_aper_sum, err):
+                     check_aper_sum, ref_aper_sum, t_err, date_obs, altitudes,
+                     target, clabel, rlabel):
     """*Incomplete* function to save file with net count values before
     converting to magnitudes.
 
@@ -279,24 +280,29 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
     path = os.path.join(dirtarget, 'ISR_Images', fil, 'WCS', 'accurate_WCS',
                         'net_counts_{}.txt'.format(date))
 
-    list_of_sums = []
-    comp_n = len(comp_aper_sums)
-    for i in range(0, len(comp_aper_sums)):
-        list_of_sums.append(comp_aper_sums[:, i].tolist())
-
-    new_list = []
-    for i, sums in enumerate(list_of_sums):
-        new_list.append([aper_sum[0][i]] + sums + [check_aper_sum[0][i]] +
-                        [ref_aper_sum[0][i]] + [err[i]])
-
     with open(path, 'w+') as f:
-        f.write('#TARGET,{{C1,C2,...,C{comp_n}}},CHECK,REF,ERR\n')
-        for n in range(len(new_list)):
-            row_str = ','.join(map(str, new_list[n]))
-            new_str = row_str + "\n"
-            f.write(new_str)
-
-    f.close()
+        f.write('#SOFTWARE=STEPUP Image Analysis\n#DELIM=,\n#DATE=JD\n' +
+                '#OBSTYPE=CCD\n')
+        comp_n = len(comp_aper_sums)
+        header_str = '#TARGET NAME,DATE,TARGET COUNTS,ERR,FILTER,(C1,...,C{}) COUNTS,CHECK LABEL,CHECK COUNTS,REFERENCE LABEL,REF COUNTS,AIRMASS\n'.format(comp_n)
+        f.write(header_str)
+        comp_sums = list(zip(*comp_aper_sums))
+        print(date_obs)
+        print(aper_sum[0])
+        for n, (date_i, tsum, err, csum, rsum, alt) in enumerate(zip(date_obs,
+                                                                     aper_sum[0],
+                                                                     t_err,
+                                                                     check_aper_sum[0],
+                                                                     ref_aper_sum[0],
+                                                                     altitudes)):
+            csums = comp_sums[n]
+            zenith = np.deg2rad(90 - alt)
+            airmass = 1 / np.cos(zenith)
+            input_list = [target, date_i, tsum, err, fil, csums, clabel, csum,
+                          rlabel, rsum, airmass]
+            input_string = ",".join(map(str, input_list))
+            f.write(input_string + '\n')
+        f.close()
 
 
 def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
@@ -491,8 +497,8 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
                         'output_{}_{}.txt'.format(date, fil))
 
     with open(path, 'w+') as f:
-        f.write('#TYPE=Extended\n#OBSERVER=PITT\n#SOFTWARE=STEPUP ' +
-                'Image Analysis\n#DELIM=,\n#DATE=JD\n#OBSTYPE=CCD\n')
+        f.write('#SOFTWARE=STEPUP Image Analysis\n#DELIM=,#DATE=JD\n' +
+                '#OBSTYPE=CCD\n')
         f.write('TARGET,DATE,TARGET MAG,ERROR,FILTER,CHECK LABEL,CHECK MAG,' +
                 'REFERENCE LABEL,REFERENCE MAG,AIRMASS\n')
         for date_i, mag, err, cmag, rmag, alt in zip(date_obs, target_mags,
