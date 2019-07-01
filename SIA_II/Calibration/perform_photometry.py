@@ -623,6 +623,8 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             # Determine if the image is saturated at the star's position using
             # the expected saturation level. If saturated, the loop will move
             # on to the next image.
+            print(hdulist[0].header['SATLEVEL'])
+            print(np.amax(star_flat))
             if np.amax(star_flat) >= hdulist[0].header['SATLEVEL']:
                 saturated.append(item)
                 continue
