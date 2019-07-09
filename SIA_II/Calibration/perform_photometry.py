@@ -622,7 +622,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                 continue
 
             # Flatten the array so that it is one-dimensional.
-            star_flat = star.reshape(1, len(star))
+            star_flat = star.reshape(1, len(star) * len(star[0]))
 
             # Determine if the image is saturated at the star's position using
             # the expected saturation level. If saturated, the loop will move
