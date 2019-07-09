@@ -613,6 +613,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
 
             print(star)
             print(len(star))
+            print(len(star[0]))
 
             # Ensure that the square is entirely on the image.
             if ((py_int - 14) < 0) or ((py_int + 16) > 2084):
