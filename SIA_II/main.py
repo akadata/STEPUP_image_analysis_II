@@ -37,7 +37,7 @@ def main():
     # all calibration data as well as if user would like specify functions at
     # command line.
     dirtarget = input('\nInput target directory: ')
-    interactive = input('\nWould you like to run SIA interatively? (Y/N): ')
+    interactive = input('\nWould you like to run SIA interatively? (Y/N): ').lower().strip(' ')
 
     # Specify keywords SIA should search for in input-file.txt.
     str_keywords = ['#TARGET=', '#DATE=', '#DIRDARK=', '#CLABEL=', '#RLABEL=',
@@ -67,7 +67,7 @@ def main():
                 else:
                     set_rad = True
             if line.startswith('#FUNCTIONS='):
-                if interactive == 'N':
+                if interactive == 'n':
                     functions = line[11:].strip('\n').split(',')
 
     target = str_input_values[0]
@@ -106,18 +106,18 @@ def main():
     coords.append(ra)
     coords.append(dec)
 
-    if interactive == 'Y':
+    if interactive == 'y':
         # Allows user to specify functions to be ran at command line.
         cont_analysis = interactive
-        while cont_analysis == 'Y':
-            answer = input('\nWhich function would you like to run? (ISR, ASTROM, PHOT): ')
+        while cont_analysis == 'y':
+            answer = input('\nWhich function would you like to run? (ISR, ASTROM, PHOT): ').lower().strip(' ')
             # Run function specified by "answer" variable.
             which_analysis(interactive, answer, target, date, filters, coords,
                            dirtarget, dirdark, comp_mags, comp_ra, comp_dec,
                            clabel, cra, cdec, rlabel, rra, rdec, set_rad,
                            aper_rad, ann_in_rad, ann_out_rad)
             # Determine if user has finished running STEPUP Image Analysis.
-            cont_analysis = input('\nWould you still like to perform a function? (Y/N): ')
+            cont_analysis = input('\nWould you still like to perform a function? (Y/N): ').lower().strip(' ')
         print('\nGoodbye.')
 
     else:
@@ -197,24 +197,24 @@ def which_analysis(interactive, answer, target, date, filters, coords,
     -------
     None
     """
-    if answer == 'ISR':
+    if answer == 'isr':
         print('\nInstrument signature removal in progress...')
         # Removes instrument signatures from dataset.
         filters = ISR.ISR_main(dirtarget, dirdark, target)
         print('\nInstrument signature removal completed.')
 
-    if answer == 'ASTROM':
+    if answer == 'astrom':
         im = None
         try:
             copyfile(os.path.join(dirtarget, 'new-image.fits'),
                          os.path.join(dirtarget, 'ISR_Images/new-image.fits'))
-            im = 'Y'
+            im = 'y'
         except FileNotFoundError:
             print('\nnew-image.fits not found in raw data directory. Goodbye.')
 
         # Determines if user has saved new-image.fits WCS calibration file to
         # ISR_Images directory that was created in ISR function.
-        if im == 'Y':
+        if im == 'y':
             print('\nAstrometry in progress...')
             # Calculates WCS information for dataset.
             perform_astrometry.perform_astrometry(target, dirtarget, filters,
@@ -223,7 +223,7 @@ def which_analysis(interactive, answer, target, date, filters, coords,
         else:
             return None
 
-    if answer == 'PHOT':
+    if answer == 'phot':
         print('\nPhotometry in progress...')
         # Perform absolute differential photometry on, create light curve(s)
         # from, and generate output file of dataset.
