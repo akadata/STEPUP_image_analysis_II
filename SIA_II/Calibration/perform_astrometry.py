@@ -15,7 +15,7 @@ def perform_astrometry(target, dirtarget, filters, verbose=False):
     headers of all the images in the dataset to get a preliminary estimate of
     the true WCS information. It writes these files and then uses imstar to
     correct the WCS information in each header. These files are copeied to a
-    new directory withtin WCS called accurate_WCS.
+    new directory within WCS called accurate_WCS.
 
     Parameters
     ----------
