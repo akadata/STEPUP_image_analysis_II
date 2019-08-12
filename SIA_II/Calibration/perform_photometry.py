@@ -639,7 +639,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                 r_out = ann_out_rad * u.arcsec
 
             else:
-                radius = 7 * u.arcsec
+                radius = 9 * u.arcsec
                 r_in = 11 * u.arcsec
                 r_out = 15 * u.arcsec
 
