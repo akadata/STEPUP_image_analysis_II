@@ -19,3 +19,5 @@
 \contentsline {section}{\numberline {4.1}Instrument Signature Removal}{11}
 \contentsline {section}{\numberline {4.2}Perform Astrometry}{11}
 \contentsline {section}{\numberline {4.3}Perform Photometry}{11}
+\contentsline {chapter}{\numberline {5}Examples}{12}
+\contentsline {section}{\numberline {5.1}Example Output of WASP-52 Data}{12}
