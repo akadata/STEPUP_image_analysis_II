@@ -639,9 +639,9 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                 r_out = ann_out_rad * u.arcsec
 
             else:
-                radius = 3 * u.arcsec
-                r_in = 15 * u.arcsec
-                r_out = 19 * u.arcsec
+                radius = 4 * u.arcsec
+                r_in = 20 * u.arcsec
+                r_out = 23 * u.arcsec
 
             # Create SkyCircularAperture and SkyCircularAnnulus objects
             # centered at the position of the star whose counts are being
