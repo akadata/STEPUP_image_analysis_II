@@ -630,10 +630,10 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                 saturated.append(item)
                 continue
 
-            centroid_x, centroid_y = centroid_2dg(star)
-            print(centroid_x, centroid_y)
-            centroid_coords = SkyCoords.from_pixel(centroid_x, centroid_y, w)
-            print(centroid_coords)
+            # centroid_x, centroid_y = centroid_2dg(star)
+            # print(centroid_x, centroid_y)
+            # centroid_coords = SkyCoords.from_pixel(centroid_x, centroid_y, w)
+            # print(centroid_coords)
 
             # Define aperture and annulus radii.
             radius = None
@@ -652,8 +652,8 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             # Create SkyCircularAperture and SkyCircularAnnulus objects
             # centered at the position of the star whose counts are being
             # summed.
-            aperture = SkyCircularAperture(centroid_coords, radius)
-            annulus = SkyCircularAnnulus(centroid_coords, r_in=r_in,
+            aperture = SkyCircularAperture(coords, radius)
+            annulus = SkyCircularAnnulus(coords, r_in=r_in,
                                          r_out=r_out)
 
             secpix1 = abs(hdulist[0].header['SECPIX1'])
