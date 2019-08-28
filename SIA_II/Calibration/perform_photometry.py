@@ -5,7 +5,7 @@ from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS
 from astropy import units as u
 from photutils import SkyCircularAperture, SkyCircularAnnulus
-from photutils.centroids import centroid_2dg
+import photutils.centroids as c
 import numpy as np
 from photutils import aperture_photometry
 from astropy.time import Time
@@ -92,8 +92,6 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
 
         write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
                    altitudes, clabel, check_mags, rlabel, ref_mags, date)
-
-        print(saturated)
 
         print('Saturated images ({}): {}'.format(fil, saturated))
         print('Exposure times ({}): {}'.format(fil, exposure_times))
@@ -352,6 +350,7 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
         plt.plot(date_obs, 2.5 * np.log10(obj), "o")
         plt.ylabel("Instrumental Magnitude")
         plt.xlabel("Time [JD]")
+        plt.gca().invert_yaxis()
         plt.title("Comp {}, {}".format(i + 1, fil))
         plt.savefig("comp_{}_{}.png".format(i + 1, fil))
         plt.show()
@@ -624,16 +623,29 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             # Determine if the image is saturated at the star's position using
             # the expected saturation level. If saturated, the loop will move
             # on to the next image.
-            print(hdulist[0].header['SATLEVEL'])
-            print(np.amax(star_flat))
+            print('Saturation value: {}'.format(hdulist[0].header['SATLEVEL']))
+            print('Max aperture value: {}'.format(int(np.amax(star_flat))))
             if np.amax(star_flat) >= hdulist[0].header['SATLEVEL']:
                 saturated.append(item)
                 continue
 
-            # centroid_x, centroid_y = centroid_2dg(star)
-            # print(centroid_x, centroid_y)
-            # centroid_coords = SkyCoords.from_pixel(centroid_x, centroid_y, w)
-            # print(centroid_coords)
+            arr_x_centroid, arr_y_centroid = c.centroid_1dg(star)
+            pix_x_centroid = int((px_int - 13) + arr_x_centroid)
+            pix_y_centroid = int((py_int - 13) + arr_y_centroid)
+            pix_centroid_coords = (pix_x_centroid, pix_y_centroid)
+            print('\nPlate-solution (x, y) object location: ({}, {})'.format(px_int, py_int))
+            print('\nCentroided (x, y) object location: ({}, {})'.format(pix_x_centroid, pix_y_centroid))
+            centroid_coords = SkyCoord.from_pixel(pix_x_centroid, pix_y_centroid, w)
+            """
+            fig, ax = fig, ax = plt.subplots(1, 1)
+            ax.scatter([px_int], [py_int], c="m")
+            ax.scatter([pix_x_centroid], [pix_y_centroid], c="r")
+            ax.imshow(image_array[(py_int - 14):(py_int + 16),
+                                  (px_int + 16):(px_int - 14)],
+                      extent=(px_int - 14,px_int + 16,py_int - 14,py_int + 16))
+            plt.show()
+            """
+            print('\nCentroided R.A. and declination: {}'.format(centroid_coords))
 
             # Define aperture and annulus radii.
             radius = None
@@ -645,15 +657,15 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                 r_out = ann_out_rad * u.arcsec
 
             else:
-                radius = 4 * u.arcsec
-                r_in = 23 * u.arcsec
+                radius = 5 * u.arcsec
+                r_in = 25 * u.arcsec
                 r_out = 27 * u.arcsec
 
             # Create SkyCircularAperture and SkyCircularAnnulus objects
             # centered at the position of the star whose counts are being
             # summed.
-            aperture = SkyCircularAperture(coords, radius)
-            annulus = SkyCircularAnnulus(coords, r_in=r_in,
+            aperture = SkyCircularAperture(centroid_coords, radius)
+            annulus = SkyCircularAnnulus(centroid_coords, r_in=r_in,
                                          r_out=r_out)
 
             secpix1 = abs(hdulist[0].header['SECPIX1'])
