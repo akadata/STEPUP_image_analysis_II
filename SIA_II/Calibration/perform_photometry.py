@@ -192,8 +192,12 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     bad_index = []
     for i, aper in enumerate(comp_apers):
         for row in aper:
+            print(row)
             if np.any(np.isnan(row)):
                 bad_index.append(i)
+
+    if len(bad_index != 0):
+        return None
 
     # Remove aperture sum(s) of comparison star(s) that are not in the
     # image.
