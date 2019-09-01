@@ -194,19 +194,19 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     # for the presence of nan values.
     bad_index = []
     for i, obj in enumerate(comp_apers):
+        print(obj)
         for aper in obj:
-            print(aper)
             if np.any(np.isnan(aper)):
                 bad_index.append(i)
 
     print(bad_index)
-    if len(bad_index) != 0:
-        return None
 
     # Remove aperture sum(s) of comparison star(s) that are not in the
     # image.
     new_comp_apers = np.delete(comp_apers, bad_index, 0)
     new_comp_mags = np.delete(comp_mags, bad_index)
+
+    print(new_comp_apers)
 
     # Determine if any comparison stars are not in the image by checking
     # for the presence of negative values.
