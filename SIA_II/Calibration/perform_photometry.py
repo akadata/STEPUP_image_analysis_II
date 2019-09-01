@@ -187,13 +187,16 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     check_aper_sum = np.array(check_aper_sum, dtype=float)
     ref_aper_sum = np.array(ref_aper_sum, dtype=float)
 
+    print(len(comp_apers))
+    cont = input("hi there! ")
+
     # Determine if any comparison stars are not in the image by checking
     # for the presence of nan values.
     bad_index = []
-    for i, aper in enumerate(comp_apers):
-        for row in aper:
-            print(row)
-            if np.any(np.isnan(row)):
+    for i, obj in enumerate(comp_apers):
+        for aper in obj:
+            print(aper)
+            if np.any(np.isnan(aper)):
                 bad_index.append(i)
 
     print(bad_index)
