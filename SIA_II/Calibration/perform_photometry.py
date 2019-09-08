@@ -187,9 +187,6 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     check_aper_sum = np.array(check_aper_sum, dtype=float)
     ref_aper_sum = np.array(ref_aper_sum, dtype=float)
 
-    print(len(comp_apers))
-    cont = input("hi there! ")
-
     # Determine if any comparison stars are not in the image by checking
     # for the presence of nan values.
     bad_index = []
@@ -294,9 +291,6 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
         header_str = '#TARGET NAME,DATE,TARGET COUNTS,ERR,FILTER,(C1,...,C{}) COUNTS,CHECK LABEL,CHECK COUNTS,REFERENCE LABEL,REF COUNTS,AIRMASS\n'.format(comp_n)
         f.write(header_str)
         comp_sums = list(zip(*comp_aper_sums))
-        print(aper_sum[0])
-        print(check_aper_sum[0])
-        print(comp_sums)
         for n, (date_i, tsum, err, csum, rsum, alt) in enumerate(zip(date_obs,
                                                                      aper_sum[0],
                                                                      t_err,
