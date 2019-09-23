@@ -37,7 +37,7 @@ def main():
     # all calibration data as well as if user would like specify functions at
     # command line.
     dirtarget = input('\nInput target directory: ')
-    if not os.path.join(dirtarget, 'input-file.txt').isfile():
+    if not os.path.exists((os.path.join(dirtarget, 'input-file.txt'))):
         dirtarget = input('The directory that you entered does not contain a file named input-file.txt./nCheck to ensure that you have entered the correct target directory or that you have created the input file.')
     interactive = input('\nWould you like to run SIA interatively? (Y/N): ').lower().strip(' ')
 
