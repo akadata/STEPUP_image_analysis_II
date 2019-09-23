@@ -191,7 +191,7 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     # for the presence of nan values.
     bad_index = []
     for i, obj in enumerate(comp_apers):
-        for n, aper in len(obj):
+        for n, aper in enumerate(obj):
             obj_iter = []
             if np.any(np.isnan(aper)):
                 obj_iter.append(n)
