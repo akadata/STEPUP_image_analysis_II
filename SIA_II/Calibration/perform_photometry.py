@@ -189,7 +189,12 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
 
     # Determine if any comparison stars are not in the image by checking
     # for the presence of nan values.
-    bad_index = []
+    bad_im = np.argwhere(np.isnan(aper_sum))
+    print(bad_im)
+
+
+    
+    """bad_index = []
     for i, obj in enumerate(comp_apers):
         for n, aper in enumerate(obj):
             obj_iter = []
@@ -216,38 +221,42 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
 
     # Remove aperture sum(s) and magntidues of comparison star(s) that are
     # not in the image.
-    comp_aper_sums = np.delete(new_comp_apers, bad_index, 0)
-    final_comp_mags = np.delete(new_comp_mags, bad_index)
+    comp_aper_sum_n = []
+    for obj, c_obj in zip(bad_index, comp_apers):
+        comp_aper_sums_n.append(np.delete(new_comp_apers, bad_index)
+        
 
     # Determine if the check star is not in the image by checking for the
     # presence of nan or negative values.
-    bad_index = []
+    bad_index_check = []
     for i, row in enumerate(check_aper_sum):
         if np.any(np.isnan(row)):
-            bad_index.append(i)
+            bad_index_check.append(i)
 
     for i, row in enumerate(check_aper_sum):
         if np.any(row <= 0):
-            bad_index.append(i)
+            bad_index_check.append(i)
 
     # If check star is not in image, let check_aper_sum = None.
-    if len(bad_index) != 0:
+    if len(bad_index_check) != 0:
         print('Check star either contains nan or non-positive values.')
 
     # Determine if the reference star is not in the image by checking for
     # the presence of nan or negative values.
-    bad_index = []
+    bad_index_ref = []
     for i, row in enumerate(ref_aper_sum):
         if np.any(np.isnan(row)):
-            bad_index.append(i)
+            bad_index_ref.append(i)
 
     for i, row in enumerate(ref_aper_sum):
         if np.any(row <= 0):
-            bad_index.append(i)
+            bad_index_ref.append(i)
 
     # If check star is not in image, let ref_aper_sum = None.
     if len(bad_index) != 0:
         print('Reference star either contains nan or non-positive values.')
+
+    """
 
     return aper_sum, comp_aper_sums, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times
 
