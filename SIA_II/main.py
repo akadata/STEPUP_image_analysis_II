@@ -38,7 +38,7 @@ def main():
     # command line.
     dirtarget = input('\nInput target directory: ')
     while not os.path.exists((os.path.join(dirtarget, 'input-file.txt'))):
-        dirtarget = input('\nThe directory that you entered does not contain a file named input-file.txt.\nCheck to ensure that you have entered the correct target directory or that you have created the input file and re-enter the path here: ')
+        dirtarget = input('\nThis directory does not contain an input file. Check to ensure that the file exists and is saved in your data directory.\n\nInput target directory: ')
     interactive = input('\nWould you like to run SIA interatively? (Y/N): ').lower().strip(' ')
 
     # Specify keywords SIA should search for in input-file.txt.

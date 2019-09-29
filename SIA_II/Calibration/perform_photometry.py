@@ -90,6 +90,8 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
         mag_plot(target_mags, target_err, date_obs, target, date, fil,
                  dirtarget, check_mags)
 
+        print(target_err)
+
         write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
                    altitudes, clabel, check_mags, rlabel, ref_mags, date)
 
@@ -175,6 +177,7 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     # Get aperture sum, error of aperture sum, times of data collection,
     # and altitudes for target.
     aper_sum, err, date_obs, altitudes, saturated, exposure_times = get_counts(dirtarget, coords[0], coords[1], fil, set_rad, aper_rad, ann_in_rad, ann_out_rad)
+    aper_sum = aper_sum[0]
     aper_sum = np.array(aper_sum, dtype=float)
 
     # Get aperture sums for each somparison star.
@@ -185,80 +188,38 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     check_aper_sum = (get_counts(dirtarget, cra, cdec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad))[0]
     ref_aper_sum = (get_counts(dirtarget, rra, rdec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad))[0]
     check_aper_sum = np.array(check_aper_sum, dtype=float)
+    check_aper_sum = check_aper_sum[0]
     ref_aper_sum = np.array(ref_aper_sum, dtype=float)
+    ref_aper_sum = ref_aper_sum[0]
 
-    # Determine if any comparison stars are not in the image by checking
-    # for the presence of nan values.
-    bad_im = np.argwhere(np.isnan(aper_sum))
-    print(bad_im)
+    # Determine if any of the comparison stars are not in the image.
+    good_comp = []
+    for i, o_aper in enumerate(comp_apers):
+        no_nan = (len(np.argwhere(np.isnan(o_aper))) == 0)
+        no_neg = (len(np.where(o_aper <= 0)[0]) == 0)
+        if no_nan and no_neg:
+            good_comp.append(i)
+    comp_apers = np.array([comp_apers[i] for i in good_comp])
+    comp_mags = np.array([comp_mags[i] for i in good_comp])
 
+    # Remove any bad data points.
+    good_im = []
+    good_im.extend(np.where(aper_sum != np.nan)[0])
+    good_im.extend(np.where(aper_sum > 0)[0])
+    good_im = np.unique(good_im)
+    aper_sum = np.array([aper_sum[i] for i in good_im])
+    err = np.array([err[i] for i in good_im])
+    date_obs = np.array([date_obs[i] for i in good_im])
+    altitudes = np.array([altitudes[i] for i in good_im])
+    exposure_times = np.array([exposure_times[i] for i in good_im])
+    comp_apers_n = []
+    for obj in comp_apers:
+        comp_apers_n.append([obj[i] for i in good_im])
+    comp_apers = np.array(comp_apers_n)
+    check_apers = np.array([check_aper_sum[i] for i in good_im])
+    ref_apers = np.array([ref_aper_sum[i] for i in good_im])
 
-    
-    """bad_index = []
-    for i, obj in enumerate(comp_apers):
-        for n, aper in enumerate(obj):
-            obj_iter = []
-            if np.any(np.isnan(aper)):
-                obj_iter.append(n)
-        bad_index.append(obj_iter)
-
-    print(bad_index)
-
-    # Remove aperture sum(s) of comparison star(s) that are not in the
-    # image.
-    new_comp_apers = np.delete(comp_apers, bad_index, 0)
-    new_comp_mags = np.delete(comp_mags, bad_index)
-
-    print(new_comp_apers)
-
-    # Determine if any comparison stars are not in the image by checking
-    # for the presence of negative values.
-    bad_index = []
-    for i, aper in enumerate(new_comp_apers):
-        for row in aper:
-            if np.any(row <= 0):
-                bad_index.append(i)
-
-    # Remove aperture sum(s) and magntidues of comparison star(s) that are
-    # not in the image.
-    comp_aper_sum_n = []
-    for obj, c_obj in zip(bad_index, comp_apers):
-        comp_aper_sums_n.append(np.delete(new_comp_apers, bad_index)
-        
-
-    # Determine if the check star is not in the image by checking for the
-    # presence of nan or negative values.
-    bad_index_check = []
-    for i, row in enumerate(check_aper_sum):
-        if np.any(np.isnan(row)):
-            bad_index_check.append(i)
-
-    for i, row in enumerate(check_aper_sum):
-        if np.any(row <= 0):
-            bad_index_check.append(i)
-
-    # If check star is not in image, let check_aper_sum = None.
-    if len(bad_index_check) != 0:
-        print('Check star either contains nan or non-positive values.')
-
-    # Determine if the reference star is not in the image by checking for
-    # the presence of nan or negative values.
-    bad_index_ref = []
-    for i, row in enumerate(ref_aper_sum):
-        if np.any(np.isnan(row)):
-            bad_index_ref.append(i)
-
-    for i, row in enumerate(ref_aper_sum):
-        if np.any(row <= 0):
-            bad_index_ref.append(i)
-
-    # If check star is not in image, let ref_aper_sum = None.
-    if len(bad_index) != 0:
-        print('Reference star either contains nan or non-positive values.')
-
-    """
-
-    return aper_sum, comp_aper_sums, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times
+    return aper_sum, comp_apers, check_apers, ref_apers, err, date_obs, altitudes, comp_mags, saturated, exposure_times
 
 
 def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
@@ -298,22 +259,27 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
         f.write('#SOFTWARE=STEPUP Image Analysis\n#DELIM=,\n#DATE=JD\n' +
                 '#OBSTYPE=CCD\n')
         comp_n = len(comp_aper_sums)
-        header_str = '#TARGET NAME,DATE,TARGET COUNTS,ERR,FILTER,(C1,...,C{}) COUNTS,CHECK LABEL,CHECK COUNTS,REFERENCE LABEL,REF COUNTS,AIRMASS\n'.format(comp_n)
+        header_str = str('#TARGET NAME,DATE,TARGET COUNTS,ERR,FILTER,(C1,...,C{})'+
+                         ' COUNTS,CHECK LABEL,CHECK COUNTS,REFERENCE LABEL,' +
+                         'REF COUNTS,AIRMASS\n'.format(comp_n))
         f.write(header_str)
         comp_sums = list(zip(*comp_aper_sums))
         for n, (date_i, tsum, err, csum, rsum, alt) in enumerate(zip(date_obs,
-                                                                     aper_sum[0],
+                                                                     aper_sum,
                                                                      t_err,
-                                                                     check_aper_sum[0],
-                                                                     ref_aper_sum[0],
+                                                                     check_aper_sum,
+                                                                     ref_aper_sum,
                                                                      altitudes)):
-            csums = comp_sums[n]
-            zenith = np.deg2rad(90 - alt)
-            airmass = 1 / np.cos(zenith)
-            input_list = [target, date_i, tsum, err, fil, csums, clabel, csum,
-                          rlabel, rsum, airmass]
-            input_string = ",".join(map(str, input_list))
-            f.write(input_string + '\n')
+            if tsum != np.nan:
+                csums = comp_sums[n]
+                zenith = np.deg2rad(90 - alt)
+                airmass = 1 / np.cos(zenith)
+                input_list = [target, date_i, tsum, err, fil, csums, clabel, csum,
+                              rlabel, rsum, airmass]
+                input_string = ",".join(map(str, input_list))
+                f.write(input_string + '\n')
+            else:
+                continue
         f.close()
 
 
@@ -383,7 +349,7 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
         if np.all(ref_aper_sum != None):
             ref_mags[i] = mag - 2.5 * np.log10(ref_aper_sum / obj)
 
-    target_err = (2.5 * np.log10((aper_sum + err) / aper_sum))[0]
+    target_err = (2.5 * np.log10((aper_sum + err) / aper_sum))
 
     # For each image, the scaled magnitude value for each comparison star is
     # averaged.
@@ -506,6 +472,12 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
     -------
     None
     """
+    print(len(date_obs))
+    print(len(target_mags))
+    print(len(target_err))
+    print(len(cmags))
+    print(len(rmags))
+    print(len(altitudes))
     path = os.path.join(dirtarget, 'ISR_Images', fil, 'WCS', 'accurate_WCS',
                         'output_{}_{}.txt'.format(date, fil))
 
