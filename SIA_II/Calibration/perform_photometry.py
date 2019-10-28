@@ -576,7 +576,6 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
         for i, item in enumerate(sorted(glob.glob(os.path.join(dirtarget_wcs,
                                                                '*.fits')))):
             o_file = os.path.join(dirtarget_wcs, item)
-            print(o_file)
             hdulist = fits.open(o_file)
             if hdulist[0].header['WCSMATCH'] < 20:
                 continue
@@ -595,6 +594,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
 
             # Get the image array.
             image_array = fits.getdata(o_file)
+            print(image_array)
 
             # Read in a 30 x 30 square centered at the star for which the
             # counts are being summed.
