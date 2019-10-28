@@ -698,6 +698,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
 
             date_obs[i] = (time)
             altitudes[i] = (hdulist[0].header['OBJCTALT'])
+            print(aper_sum)
 
         total_sum.append(aper_sum)
 
