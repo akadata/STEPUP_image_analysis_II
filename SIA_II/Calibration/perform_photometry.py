@@ -576,6 +576,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
         for i, item in enumerate(sorted(glob.glob(os.path.join(dirtarget_wcs,
                                                                '*.fits')))):
             o_file = os.path.join(dirtarget_wcs, item)
+            print(o_file)
             hdulist = fits.open(o_file)
             if hdulist[0].header['WCSMATCH'] < 20:
                 continue
