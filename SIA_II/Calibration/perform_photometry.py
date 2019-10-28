@@ -80,6 +80,7 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
     for fil in filters:
         os.chdir(os.path.join(dirtarget, 'ISR_Images', fil, 'WCS',
                               'accurate_WCS'))
+        print(os.pwd())
 
         aper_sum, comp_aper_sums, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times = photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec, rra, rdec, comp_mags, set_rad, aper_rad, ann_in_rad, ann_out_rad)
 
