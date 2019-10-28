@@ -204,6 +204,7 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
 
     # Remove any bad data points.
     good_im = []
+    print(aper_sum)
     good_im.extend(np.where(aper_sum != np.nan)[0])
     good_im.extend(np.where(aper_sum > 0)[0])
     good_im = np.unique(good_im)
@@ -482,7 +483,7 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
                         'output_{}_{}.txt'.format(date, fil))
 
     with open(path, 'w+') as f:
-        f.write('#SOFTWARE=STEPUP Image Analysis\n#DELIM=,#DATE=JD\n' +
+        f.write('#SOFTWARE=STEPUP Image Analysis\n#DELIM=,\n#DATE=JD\n' +
                 '#OBSTYPE=CCD\n')
         f.write('TARGET,DATE,TARGET MAG,ERROR,FILTER,CHECK LABEL,CHECK MAG,' +
                 'REFERENCE LABEL,REFERENCE MAG,AIRMASS\n')
@@ -628,8 +629,12 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             ax.scatter([px_int], [py_int], c="m")
             ax.scatter([pix_x_centroid], [pix_y_centroid], c="r")
             ax.imshow(image_array[(py_int - 14):(py_int + 16),
-                                  (px_int + 16):(px_int - 14)],
-                      extent=(px_int - 14,px_int + 16,py_int - 14,py_int + 16))
+                                  (px_int - 14):(px_int + 16)],
+                      extent=(px_int - 14,px_int + 16,py_int - 14,py_int + 16),
+                      cmap='magma')
+            plt.xlabel('x')
+            plt.ylabel('y')
+            plt.legend()
             plt.show()
             """
             print('\nCentroided R.A. and declination: {}'.format(centroid_coords))
@@ -644,7 +649,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                 r_out = ann_out_rad * u.arcsec
 
             else:
-                radius = 5 * u.arcsec
+                radius = 3 * u.arcsec
                 r_in = 25 * u.arcsec
                 r_out = 27 * u.arcsec
 
