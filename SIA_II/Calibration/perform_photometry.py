@@ -577,7 +577,7 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
                                                                '*.fits')))):
             o_file = os.path.join(dirtarget_wcs, item)
             hdulist = fits.open(o_file)
-            print(o_file)
+            print(hdulist)
             if hdulist[0].header['WCSMATCH'] < 20:
                 continue
             # Determine the exposure time for item.
