@@ -30,17 +30,17 @@ plt.rcParams.update({'ytick.minor.width': 1.25 })
 
 
 def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
-                       comp_dec, comp_mags, clabel, cra, cdec, rlabel, rra,
-                       rdec, set_rad, aper_rad, ann_in_rad, ann_out_rad):
+                       comp_dec, comp_mags, clabel, cra, cdec, set_rad,
+                       aper_rad, ann_in_rad, ann_out_rad):
     """Runs photometry part of image analysis routine.
 
     Calls photometry, which calls get_counts to get the aperture sums for the
-    target, comparison stars, check star, and ref star as well as the error on
+    target, comparison stars, and check star as well as the error on
     the target aperture sum. get_counts also returns a list of all of the times
     and altitudes for each image. Then these aperture sums are converted in
     counts_to_mag from count values to magnitude values using the aperture sums
     of the comparison stars and their mangitudes. This process is repeated for
-    the target, check, and reference aperture sums as well as the target error.
+    the target and check aperture sums as well as the target error.
     Then, mag_plot is called, which plots the target magnitudes with error over
     time and check magnitudes over time. Then write_file is called to write an
     output file in the AAVSO extended file format to be submitted to AAVSO
@@ -65,20 +65,12 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
         List of strings of comparison stars' declination.
     comp_mags : list
         List of floats representing the magnitudes of the comparison stars.
-    vsp_code : str
-        Code to indentify AAVSO photometry table used for analysis.
     clabel : str
         Name of check star.
     cra : list
         List of string of right ascension of check star.
     cdec : list
         List of string of delination of check star.
-    rlabel : str
-        Name of reference star.
-    rra : list
-        List of string of right ascension of reference star.
-    rdec : str
-        List of string of declination of reference star.
     set_rad : Boolean
         Determine whether user would like to use default aperture/annulus radii
         or specify their own.
@@ -97,19 +89,15 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
         os.chdir(os.path.join(dirtarget, 'ISR_Images', fil, 'WCS',
                               'accurate_WCS'))
 
-        aper_sum, comp_aper_sums, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times = photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec, rra, rdec, comp_mags, set_rad, aper_rad, ann_in_rad, ann_out_rad)
+        aper_sum, comp_aper_sums, check_aper_sum, err, date_obs, altitudes, final_comp_mags, saturated, exposure_times = photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec, comp_mags, set_rad, aper_rad, ann_in_rad, ann_out_rad)
 
-        write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum, check_aper_sum, ref_aper_sum, err, date_obs, altitudes, target, clabel, rlabel)
+        write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum, check_aper_sum, err, date_obs, altitudes, target, clabel)
 
-        target_mags, target_err, check_mags, ref_mags = counts_to_mag(aper_sum, comp_aper_sums, err, final_comp_mags, check_aper_sum, ref_aper_sum, fil, date_obs)
+        target_mags, target_err, check_mags = counts_to_mag(aper_sum, comp_aper_sums, err, final_comp_mags, check_aper_sum, fil, date_obs)
 
-        mag_plot(target_mags, target_err, date_obs, target, date, fil,
-                 dirtarget, check_mags)
+        mag_plot(target_mags, target_err, date_obs, target, date, fil, dirtarget, check_mags)
 
-        print(target_err)
-
-        write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
-                   altitudes, clabel, check_mags, rlabel, ref_mags, date)
+        write_file(target_mags, target_err, date_obs, target, dirtarget, fil, altitudes, clabel, check_mags, date)
 
         print('Saturated images ({}): {}'.format(fil, saturated))
         print('Exposure times ({}): {}'.format(fil, exposure_times))
@@ -117,20 +105,19 @@ def perform_photometry(target, dirtarget, filters, date, coords, comp_ra,
     multi_filter_analysis(dirtarget, date, target, filters)
 
 
-def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
-               cdec, rra, rdec, comp_mags, set_rad, aper_rad,
-               ann_in_rad, ann_out_rad):
-    """Gets aperture sums for target, comparison, check, and reference stars.
+def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec,
+               comp_mags, set_rad, aper_rad, ann_in_rad, ann_out_rad):
+    """Gets aperture sums for target, comparison, and check stars.
 
     Calls get_counts for the list of right ascension(s) and declination(s) for
-    the target star, each comparison star, the check star, and the reference
-    star. The err, date_obs, and altitudes are defined when get_counts is
+    the target star, each comparison star, and the check star.
+    The err, date_obs, and altitudes are defined when get_counts is
     called for the target star. Then, if any of the comparison stars are not
     image (i.e. they have either nan or negative values in their aper_sum
     in the arrays), then they are removed from the comp_aper_sum array and the
     corresponding magnitude is removed from comp_mags. The same process is
-    repreated for the check and reference star, except there is no
-    corresponding magnitude to delete.
+    repreated for the check and star, except there is no corresponding
+    magnitude to delete.
 
     Parameters
     ----------
@@ -149,10 +136,6 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
         List of string of right ascension of check star.
     cdec : list
         List of string of delination of check star.
-    rra : list
-        List of string of right ascension of reference star.
-    rdec : str
-        List of string of declination of reference star.
     comp_mags : list
         List of floats representing the magnitudes of the comparison stars.
     set_rad : Boolean
@@ -173,8 +156,6 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
         Filtered array of comparison star magnitudes.
     check_aper_sum : numpy.ndarray
         Filtered array of aperture sum for check star in counts.
-    ref_aper_sum : numpy.ndarray
-        Filtered array of aperture sum for reference star in counts.
     err : numpy.ndarray
         Array of error values for each aperture sum of the target star in
         counts.
@@ -192,21 +173,18 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
     """
     # Get aperture sum, error of aperture sum, times of data collection,
     # and altitudes for target.
-    aper_sum, err, date_obs, altitudes, saturated, exposure_times = get_counts(dirtarget, coords[0], coords[1], fil, set_rad, aper_rad, ann_in_rad, ann_out_rad)
+    aper_sum, err, date_obs, altitudes, saturated, exposure_times = get_counts(dirtarget, coords[0], coords[1], fil, set_rad, aper_rad, ann_in_rad, ann_out_rad, "target", True)
     aper_sum = aper_sum[0]
     aper_sum = np.array(aper_sum, dtype=float)
 
     # Get aperture sums for each somparison star.
-    comp_apers = (get_counts(dirtarget, comp_ra, comp_dec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad))[0]
+    comp_apers = (get_counts(dirtarget, comp_ra, comp_dec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad, "comp", False))[0]
     comp_apers = np.array(comp_apers, dtype=float)
 
-    # Get aperture sum of the check and reference stars.
-    check_aper_sum = (get_counts(dirtarget, cra, cdec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad))[0]
-    ref_aper_sum = (get_counts(dirtarget, rra, rdec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad))[0]
+    # Get aperture sum of the check star.
+    check_aper_sum = (get_counts(dirtarget, cra, cdec, fil, set_rad, aper_rad, ann_in_rad, ann_out_rad, "check", True))[0]
     check_aper_sum = np.array(check_aper_sum, dtype=float)
     check_aper_sum = check_aper_sum[0]
-    ref_aper_sum = np.array(ref_aper_sum, dtype=float)
-    ref_aper_sum = ref_aper_sum[0]
 
     # Determine if any of the comparison stars are not in the image.
     good_comp = []
@@ -220,7 +198,6 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
 
     # Remove any bad data points.
     good_im = []
-    print(aper_sum)
     good_im.extend(np.where(aper_sum != np.nan)[0])
     good_im.extend(np.where(aper_sum > 0)[0])
     good_im = np.unique(good_im)
@@ -234,14 +211,13 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra,
         comp_apers_n.append([obj[i] for i in good_im])
     comp_apers = np.array(comp_apers_n)
     check_apers = np.array([check_aper_sum[i] for i in good_im])
-    ref_apers = np.array([ref_aper_sum[i] for i in good_im])
 
-    return aper_sum, comp_apers, check_apers, ref_apers, err, date_obs, altitudes, comp_mags, saturated, exposure_times
+    return aper_sum, comp_apers, check_apers, err, date_obs, altitudes, comp_mags, saturated, exposure_times
 
 
 def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
-                     check_aper_sum, ref_aper_sum, t_err, date_obs, altitudes,
-                     target, clabel, rlabel):
+                     check_aper_sum, t_err, date_obs, altitudes, target,
+                     clabel):
     """*Incomplete* function to save file with net count values before
     converting to magnitudes.
 
@@ -259,8 +235,6 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
         Array of aperture sums for target star in counts.
     check_aper_sum : numpy.ndarray
         Filtered array of aperture sum for check star in counts.
-    ref_aper_sum : numpy.ndarray
-        Filtered array of aperture sum for reference star in counts.
     err : numpy.ndarray
         Array of error values for each aperture sum of the target star in
         counts.
@@ -277,22 +251,21 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
                 '#OBSTYPE=CCD\n')
         comp_n = len(comp_aper_sums)
         header_str = str('#TARGET NAME,DATE,TARGET COUNTS,ERR,FILTER,(C1,...,C{})'+
-                         ' COUNTS,CHECK LABEL,CHECK COUNTS,REFERENCE LABEL,' +
-                         'REF COUNTS,AIRMASS\n'.format(comp_n))
+                         ' COUNTS,CHECK LABEL,CHECK COUNTS,' +
+                         'AIRMASS\n'.format(comp_n))
         f.write(header_str)
         comp_sums = list(zip(*comp_aper_sums))
-        for n, (date_i, tsum, err, csum, rsum, alt) in enumerate(zip(date_obs,
-                                                                     aper_sum,
-                                                                     t_err,
-                                                                     check_aper_sum,
-                                                                     ref_aper_sum,
-                                                                     altitudes)):
+        for n, (date_i, tsum, err, csum, alt) in enumerate(zip(date_obs,
+                                                               aper_sum,
+                                                               t_err,
+                                                               check_aper_sum,
+                                                               altitudes)):
             if tsum != np.nan:
                 csums = comp_sums[n]
                 zenith = np.deg2rad(90 - alt)
                 airmass = 1 / np.cos(zenith)
                 input_list = [target, date_i, tsum, err, fil, csums, clabel, csum,
-                              rlabel, rsum, airmass]
+                              airmass]
                 input_string = ",".join(map(str, input_list))
                 f.write(input_string + '\n')
             else:
@@ -301,7 +274,7 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
 
 
 def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
-                  ref_aper_sum, fil, date_obs):
+                  fil, date_obs):
     """Scales the aperture sums from counts to magnitudes.
 
     Parameters
@@ -317,8 +290,6 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
         List of floats representing the magnitudes of the comparison stars.
     check_aper_sum : numpy.ndarray
         Filtered array of aperture sum for check star in counts.
-    ref_aper_sum : numpy.ndarray
-        Filtered array of aperture sum for reference star in counts.
     fil : str
         Name of filter used for images which are currently being processed.
     date_obs : numpy.ndarray
@@ -332,26 +303,23 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
         Array of error values for target magnitudes.
     check_mags_f : numpy.ndarray
         Array of magnitude values for the check star.
-    ref_mags_f : numpy.ndarray
-        Array of magnitude values for the reference star.
     """
-    # Initialize arrays for target magnitudes, check magnitudes, reference
-    # magnitudes, and errors in target magnitudes.
+    # Initialize arrays for target magnitudes, check magnitudes,
+    # and errors in target magnitudes.
     scaled_mags = np.empty(comp_aper_sums.shape)
     scaled_mags[:] = np.nan
     check_mags = np.empty(comp_aper_sums.shape)
     check_mags[:] = np.nan
-    ref_mags = np.empty(comp_aper_sums.shape)
-    ref_mags[:] = np.nan
 
-    for i, obj in enumerate(comp_aper_sums):
+    for i, (obj, mag) in enumerate(zip(comp_aper_sums, comp_mags)):
         figure = plt.figure(figsize=(10,8))
-        plt.plot(date_obs, 2.5 * np.log10(obj), "o", c='cadetblue')
+        plt.plot(date_obs, 2.5 * np.log10(obj), "o", c='cadetblue', label='STEPUP {}'.format(fil))
         plt.ylabel("Instrumental Magnitude")
         plt.xlabel("Time [JD]")
         plt.gca().invert_yaxis()
-        plt.title("Comp {}, {}".format(i + 1, fil))
+        plt.title("Comp {}, {} = {} mag".format(i + 1, fil, mag))
         plt.savefig("comp_{}_{}.png".format(i + 1, fil))
+        plt.legend()
         plt.show()
 
     for i, (mag, obj) in enumerate(zip(comp_mags, comp_aper_sums)):
@@ -360,12 +328,10 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
         # (aper_sum) is determined.
         scaled_mags[i] = mag - 2.5 * np.log10(aper_sum / obj)
 
-        # If the check star and reference star is in the image, the magnitudes
-        # of each star are determined for each image.
+        # If the check star is in the image, the magnitudes of each star are
+        # determined for each image.
         if np.all(check_aper_sum != None):
             check_mags[i] = mag - 2.5 * np.log10(check_aper_sum / obj)
-        if np.all(ref_aper_sum != None):
-            ref_mags[i] = mag - 2.5 * np.log10(ref_aper_sum / obj)
 
     target_err = (2.5 * np.log10((aper_sum + err) / aper_sum))
 
@@ -382,21 +348,11 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
     else:
         check_mags_f = 0
 
-    # If the reference star is in the image, the calculated magnitudes are
-    # averaged for each image.
-    ref_mags_f = None
-    if np.all(ref_aper_sum != None):
-        ref_mags = np.array(ref_mags)
-        ref_mags_f = np.average(ref_mags, axis=0)
-    else:
-        ref_mags_f = 0
-
     print('\nTarget mags: ', target_mags)
     print('\nTarget error: ', target_err)
     print('\nCheck mags: ', check_mags_f)
-    print('\nRef mags: ', ref_mags_f)
 
-    return target_mags, target_err, check_mags_f, ref_mags_f
+    return target_mags, target_err, check_mags_f
 
 
 def mag_plot(target_mags, target_err, date_obs, target, date, fil, dirtarget,
@@ -435,16 +391,18 @@ def mag_plot(target_mags, target_err, date_obs, target, date, fil, dirtarget,
     f, axarr = plt.subplots(2, sharex=True,
                             gridspec_kw={'height_ratios': [3, 1]},
                             figsize=(10, 8))
-    axarr[0].errorbar(date_obs, target_mags, yerr=target_err, fmt='o', c='cadetblue')
+    axarr[0].errorbar(date_obs, target_mags, yerr=target_err, fmt='o', c='cadetblue', label='STEPUP {}'.format(fil))
     axarr[0].set_title('Light Curve of {}, {}'.format(target, date))
-    axarr[0].set_ylabel('{} Magnitude'.format(fil))
+    axarr[0].set_ylabel('Magnitude')
     axarr[0].invert_yaxis
+    axarr[0].legend()
     axarr[0].set_ylim(axarr[0].get_ylim()[::-1])
-    axarr[1].scatter(date_obs, check_mags, c='cadetblue')
+    axarr[1].scatter(date_obs, check_mags, c='cadetblue', label='STEPUP {}'.format(fil))
     axarr[1].set_ylim(axarr[1].get_ylim()[::-1])
     axarr[1].invert_yaxis
+    axarr[1].legend()
     axarr[1].set_title('Check Star')
-    axarr[1].set_ylabel('{} Magnitude'.format(fil))
+    axarr[1].set_ylabel('Magnitude')
     axarr[1].set_xlabel('Time [JD]')
     f.savefig(os.path.join(dirtarget, 'ISR_Images', fil, 'WCS', 'accurate_WCS',
                            'lightcurve_{}_{}.pdf'.format(date, fil)))
@@ -452,7 +410,7 @@ def mag_plot(target_mags, target_err, date_obs, target, date, fil, dirtarget,
 
 
 def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
-               altitudes, clabel, cmags, rlabel, rmags, date):
+               altitudes, clabel, cmags, date):
     """Writes file of observational data to submit to AAVSO.
 
     Formats data to be compatible for submission for the AAVSO Extended File
@@ -480,10 +438,6 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
     cmags : numpy.ndarray
         Array of count values of aperture sum of comparison star of closest
         location to the target star.
-    rlabel : str
-        Name of reference star.
-    rmags : numpy.ndarray
-        Array of count values of apeture sum of reference star.
     date : str
         Date of observation.
 
@@ -498,21 +452,19 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
         f.write('#SOFTWARE=STEPUP Image Analysis\n#DELIM=,\n#DATE=JD\n' +
                 '#OBSTYPE=CCD\n')
         f.write('TARGET,DATE,TARGET MAG,ERROR,FILTER,CHECK LABEL,CHECK MAG,' +
-                'REFERENCE LABEL,REFERENCE MAG,AIRMASS\n')
-        for date_i, mag, err, cmag, rmag, alt in zip(date_obs, target_mags,
-                                                     target_err, cmags, rmags,
-                                                     altitudes):
+                'AIRMASS\n')
+        for date_i, mag, err, cmag, alt in zip(date_obs, target_mags,
+                                               target_err, cmags, altitudes):
             zenith = np.deg2rad(90 - alt)
             airmass = 1 / np.cos(zenith)
-            input_list = [target, date_i, mag, err, fil, clabel, cmag, rlabel,
-                          rmag, airmass]
+            input_list = [target, date_i, mag, err, fil, clabel, cmag, airmass]
             input_string = ",".join(map(str, input_list))
             f.write(input_string + '\n')
         f.close()
 
 
 def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
-               ann_in_rad, ann_out_rad):
+               ann_in_rad, ann_out_rad, name, centroid_plt):
     """Determines count values for star(s).
 
     Reads in all files from dirtarget and initializes arrays for error,
@@ -587,11 +539,14 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
     p1 = None
     p2 = None
     circ = None
+    figure = None
+    axis = None
 
     for ra, dec in zip(rightascension, declination):
         cent_ind = np.linspace(0, size-1, 9).astype(int)
-        figure, axis = plt.subplots(nrows=3, ncols=3, figsize=(10,8))
-        axis = axis.flatten()
+        if centroid_plt:
+            figure, axis = plt.subplots(nrows=3, ncols=3, figsize=(10,8))
+            axis = axis.flatten()
         aper_sum = np.empty(size)
         aper_sum[:] = np.nan
         for i, item in enumerate(sorted(glob.glob(os.path.join(dirtarget_wcs,
@@ -657,9 +612,9 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             r_in = None
             r_out = None
             if set_rad:
-                radius = aper_rad * u.arcsec
-                r_in = ann_in_rad * u.arcsec
-                r_out = ann_out_rad * u.arcsec
+                radius = float(aper_rad) * u.arcsec
+                r_in = float(ann_in_rad) * u.arcsec
+                r_out = float(ann_out_rad) * u.arcsec
 
             else:
                 radius = 4 * u.arcsec
@@ -682,15 +637,16 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
             area_in = np.pi * (r_in / secpix1) ** 2
             annulus_area = area_out - area_in
 
-            if i in cent_ind:
-                p1 = axis[i_plot[0]].scatter([px_int+1], [py_int+1], c="thistle", label="Original", edgecolors='mistyrose')
-                p2 = axis[i_plot[0]].scatter([pix_x_centroid+1], [pix_y_centroid+1], c="rebeccapurple", label="Corrected", edgecolors='mistyrose')
-                im = axis[i_plot[0]].imshow(star, extent=(px_int - 9,px_int + 11,py_int - 9,py_int + 11), cmap='magma', origin='lower')
-                axis[i_plot[0]].set_title('Image {}'.format(i), size=10)
-                circ = Circle((pix_x_centroid+1, pix_y_centroid+1), radius.value/secpix1, fill=False, label='Aperture', ls='-', color='mistyrose')
-                axis[i_plot[0]].add_patch(circ)
-                for label in (axis[i_plot[0]].get_xticklabels() + axis[i_plot[0]].get_yticklabels()):
-                    label.set_fontsize(8)
+            if centroid_plt:
+                if i in cent_ind:
+                    p1 = axis[i_plot[0]].scatter([px_int+1], [py_int+1], c="thistle", label="Original", edgecolors='mistyrose')
+                    p2 = axis[i_plot[0]].scatter([pix_x_centroid+1], [pix_y_centroid+1], c="rebeccapurple", label="Corrected", edgecolors='mistyrose')
+                    im = axis[i_plot[0]].imshow(star, extent=(px_int - 9,px_int + 11,py_int - 9,py_int + 11), cmap='magma', origin='lower')
+                    axis[i_plot[0]].set_title('Image {}'.format(i), size=10)
+                    circ = Circle((pix_x_centroid+1, pix_y_centroid+1), radius.value/secpix1, fill=False, label='Aperture', ls='-', color='mistyrose')
+                    axis[i_plot[0]].add_patch(circ)
+                    for label in (axis[i_plot[0]].get_xticklabels() + axis[i_plot[0]].get_yticklabels()):
+                        label.set_fontsize(8)
 
             apers = (aperture, annulus)
 
@@ -726,18 +682,20 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
 
         total_sum.append(aper_sum)
 
+        if centroid_plt:
+            figure.subplots_adjust(right=0.8)
+            cbar_ax = figure.add_axes([0.85, 0.15, 0.05, 0.7])
+            cb = figure.colorbar(im, cax=cbar_ax)
+            plt.setp(cb.ax.get_yticklabels(), fontsize=8)
 
-        figure.subplots_adjust(right=0.8)
-        cbar_ax = figure.add_axes([0.85, 0.15, 0.05, 0.7])
-        cb = figure.colorbar(im, cax=cbar_ax)
-        plt.setp(cb.ax.get_yticklabels(), fontsize=8)
-
-        plt.figlegend([p1, p2, circ], ['Original', 'Corrected', 'Aperture'], fontsize=14)
-        figure.suptitle('Aperture Centroiding on {}, {}'.format(ra, dec), fontsize=16)        
-        figure.text(0.5, 0.04, 'x [pixel]', ha='center')
-        figure.text(0.04, 0.5, 'y [pixel]', va='center', rotation='vertical')
-        plt.savefig(os.path.join(dirtarget, 'ISR_Images', fil, 'WCS',
-                                 'accurate_WCS', 'centroid_{}_{}.pdf'.format(ra, dec)))
+            plt.figlegend([p1, p2, circ], ['Original', 'Corrected', 'Aperture'], fontsize=14)
+            figure.suptitle('Aperture Centroiding on {}, {}'.format(ra, dec), fontsize=16)        
+            figure.text(0.5, 0.04, 'x [pixel]', ha='center')
+            figure.text(0.04, 0.5, 'y [pixel]', va='center', rotation='vertical')
+            plt.savefig(os.path.join(dirtarget, 'ISR_Images', fil, 'WCS',
+                                     'accurate_WCS', 'centroid_{}.pdf'.format(name)))
+        else:
+            continue
 
     return total_sum, err, date_obs, altitudes, saturated, exposure_times
 

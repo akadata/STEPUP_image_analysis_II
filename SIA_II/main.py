@@ -38,14 +38,16 @@ def main():
     # command line.
     dirtarget = input('\nInput target directory: ')
     while not os.path.exists((os.path.join(dirtarget, 'input-file.txt'))):
-        dirtarget = input('\nThis directory does not contain an input file. Check to ensure that the file exists and is saved in your data directory.\n\nInput target directory: ')
+        dirtarget = input('\nThis directory does not contain an input file. Check to ensure that the file exists and is saved in your data directory.\n\nInput target directory or enter "Q" to quit: ')
+        if dirtarget.lower() == 'q':
+            return None
     interactive = input('\nWould you like to run SIA interatively? (Y/N): ').lower().strip(' ')
 
     # Specify keywords SIA should search for in input-file.txt.
-    str_keywords = ['#TARGET=', '#DATE=', '#DIRDARK=', '#CLABEL=', '#RLABEL=',
-                    '#APERRAD=', '#ANNINRAD=', '#ANNOUTRAD=']
+    str_keywords = ['#TARGET=', '#DATE=', '#DIRDARK=', '#CLABEL=', '#APERRAD=',
+                    '#ANNINRAD=', '#ANNOUTRAD=']
     list_keywords = ['#FILTERS=', '#RA=', '#DEC=', '#COMPMAGS=', '#COMPRA=',
-                     '#COMPDEC=', '#CRA=', '#CDEC=', '#RRA=', '#RDEC=']
+                     '#COMPDEC=', '#CRA=', '#CDEC=']
 
     # Read in information from input-file.txt and assign it to corresponding
     # variable.
@@ -76,10 +78,9 @@ def main():
     date = str_input_values[1]
     dirdark = str_input_values[2]
     clabel = str_input_values[3]
-    rlabel = str_input_values[4]
-    aper_rad = str_input_values[5]
-    ann_in_rad = str_input_values[6]
-    ann_out_rad = str_input_values[7]
+    aper_rad = str_input_values[4]
+    ann_in_rad = str_input_values[5]
+    ann_out_rad = str_input_values[6]
     filters = list_input_values[0]
     ra = list_input_values[1]
     dec = list_input_values[2]
@@ -88,8 +89,6 @@ def main():
     comp_dec = list_input_values[5]
     cra = list_input_values[6]
     cdec = list_input_values[7]
-    rra = list_input_values[8]
-    rdec = list_input_values[9]
 
     # If dark files are stored in same directory as input-file.txt, target
     # data, and other calibration files, dirdark is assigned to same string as
@@ -116,7 +115,7 @@ def main():
             # Run function specified by "answer" variable.
             which_analysis(interactive, answer, target, date, filters, coords,
                            dirtarget, dirdark, comp_mags, comp_ra, comp_dec,
-                           clabel, cra, cdec, rlabel, rra, rdec, set_rad,
+                           clabel, cra, cdec, set_rad,
                            aper_rad, ann_in_rad, ann_out_rad)
             # Determine if user has finished running STEPUP Image Analysis.
             cont_analysis = input('\nWould you still like to perform a function? (Y/N): ').lower().strip(' ')
@@ -129,14 +128,13 @@ def main():
             answer = function
             which_analysis(interactive, answer, target, date, filters, coords,
                            dirtarget, dirdark, comp_mags, comp_ra, comp_dec,
-                           clabel, cra, cdec, rlabel, rra, rdec, set_rad,
-                           aper_rad, ann_in_rad, ann_out_rad)
+                           clabel, cra, cdec, set_rad, aper_rad, ann_in_rad,
+                           ann_out_rad)
 
 
 def which_analysis(interactive, answer, target, date, filters, coords,
                    dirtarget, dirdark, comp_mags, comp_ra, comp_dec, clabel,
-                   cra, cdec, rlabel, rra, rdec, set_rad, aper_rad, ann_in_rad,
-                   ann_out_rad):
+                   cra, cdec, set_rad, aper_rad, ann_in_rad, ann_out_rad):
     """Run one of three functions in image analysis routine.
 
     Based on user input, "answer" variable specifies which function from
@@ -179,12 +177,6 @@ def which_analysis(interactive, answer, target, date, filters, coords,
         List of string of right ascension of check star.
     cdec : list
         List of string of delination of check star.
-    rlabel : str
-        Name of reference star.
-    rra : list
-        List of string of right ascension of reference star.
-    rdec : str
-        List of string of declination of reference star.
     set_rad : Boolean
         Determine whether user would like to use default aperture/annulus radii
         or specify their own.
@@ -231,8 +223,7 @@ def which_analysis(interactive, answer, target, date, filters, coords,
         # from, and generate output file of dataset.
         perform_photometry.perform_photometry(target, dirtarget, filters, date,
                                               coords, comp_ra, comp_dec,
-                                              comp_mags, clabel, cra, cdec,
-                                              rlabel, rra, rdec, set_rad,
+                                              comp_mags, clabel, cra, cdec, set_rad,
                                               aper_rad, ann_in_rad, ann_out_rad)
         print('\nPhotometry completed.')
 
