@@ -14,7 +14,7 @@ To run SIA_II, user must have Python 3 with standard libraries and the following
 - AstroPy
 - PhotUtils
 
-Additionally, the user must install and compile the [WCSTools software package](http://tdc-www.harvard.edu/wcstools/) and add the executables to their device's `PATH`.
+These packages are all available to install using `pip`. Additionally, the user must install and compile the [WCSTools software package](http://tdc-www.harvard.edu/wcstools/) and add the executables to their device's `PATH`.
 
 ## Outside Resources
 SIA_II uses [Astrometry.net](http://astrometry.net/) and [WCSTools software package](http://tdc-www.harvard.edu/wcstools/) to plate solve inputted datasets.
