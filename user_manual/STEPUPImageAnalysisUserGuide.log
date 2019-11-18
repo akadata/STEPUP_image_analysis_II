@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  7 JUN 2019 13:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  17 NOV 2019 22:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -264,11 +264,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--63
 
 ]
 Chapter 2.
-<example.png, id=20, 682.55pt x 473.77pt>
+<example.png, id=20, 800.9925pt x 489.83pt>
 File: example.png Graphic file (type png)
  <use example.png>
 Package pdftex.def Info: example.png used on input line 73.
-(pdftex.def)             Requested size: 281.11792pt x 195.13098pt.
+(pdftex.def)             Requested size: 319.08356pt x 195.13098pt.
  [3
 
  <./example.png>] [4] [5]
@@ -296,56 +296,59 @@ Chapter 4.
 
 ]
 Chapter 5.
-<wasplightcurve.png, id=78, 462.52798pt x 346.89601pt>
-File: wasplightcurve.png Graphic file (type png)
+<wasplightcurve.pdf, id=78, 722.7pt x 578.16pt>
+File: wasplightcurve.pdf Graphic file (type pdf)
+ <use wasplightcurve.pdf>
+Package pdftex.def Info: wasplightcurve.pdf used on input line 254.
+(pdftex.def)             Requested size: 243.90623pt x 195.13098pt.
 
-<use wasplightcurve.png>
-Package pdftex.def Info: wasplightcurve.png used on input line 254.
-(pdftex.def)             Requested size: 260.17134pt x 195.13098pt.
- <comp1r.png, id=79, 462.528pt x 346.896pt>
-File: comp1r.png Graphic file (type png)
+<comp1r.pdf, id=79, 722.7pt x 578.16pt>
+File: comp1r.pdf Graphic file (type pdf)
+ <use comp1r.pdf>
+Package pdftex.def Info: comp1r.pdf used on input line 261.
+(pdftex.def)             Requested size: 150.32503pt x 120.26149pt.
 
-<use comp1r.png>
-Package pdftex.def Info: comp1r.png used on input line 261.
-(pdftex.def)             Requested size: 150.32503pt x 112.74515pt.
- <comp2r.png, id=80, 462.528pt x 346.896pt>
-File: comp2r.png Graphic file (type png)
- <use comp2r.png>
-Package pdftex.def Info: comp2r.png used on input line 265.
-(pdftex.def)             Requested size: 150.32503pt x 112.74515pt.
+<comp2r.pdf, id=80, 722.7pt x 578.16pt>
+File: comp2r.pdf Graphic file (type pdf)
+ <use comp2r.pdf>
+Package pdftex.def Info: comp2r.pdf used on input line 265.
+(pdftex.def)             Requested size: 150.32503pt x 120.26149pt.
 
-<comp3r.png, id=81, 462.528pt x 346.896pt>
-File: comp3r.png Graphic file (type png)
- <use comp3r.png>
-Package pdftex.def Info: comp3r.png used on input line 269.
-(pdftex.def)             Requested size: 150.32503pt x 112.74515pt.
+<comp3r.pdf, id=81, 722.7pt x 578.16pt>
+File: comp3r.pdf Graphic file (type pdf)
+ <use comp3r.pdf>
+Package pdftex.def Info: comp3r.pdf used on input line 269.
+(pdftex.def)             Requested size: 150.32503pt x 120.26149pt.
 
-<excountout.png, id=82, 1190.4475pt x 297.11pt>
+<excountout.png, id=82, 1294.8375pt x 412.54124pt>
 File: excountout.png Graphic file (type png)
  <use excountout.png>
 Package pdftex.def Info: excountout.png used on input line 278.
-(pdftex.def)             Requested size: 443.03807pt x 110.5719pt.
+(pdftex.def)             Requested size: 347.04231pt x 110.5719pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<exmagout.png, id=83, 1194.4625pt x 272.01625pt>
+<exmagout.png, id=83, 931.48pt x 362.35374pt>
 File: exmagout.png Graphic file (type png)
  <use exmagout.png>
 Package pdftex.def Info: exmagout.png used on input line 284.
-(pdftex.def)             Requested size: 485.54082pt x 110.5719pt.
-
-Overfull \hbox (15.78583pt too wide) in paragraph at lines 284--285
- [] 
- []
+(pdftex.def)             Requested size: 284.23601pt x 110.5719pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [12
 
- <./wasplightcurve.png>] [13 <./comp1r.png> <./comp2r.png> <./comp3r.png> <./ex
-countout.png> <./exmagout.png>] (./STEPUPImageAnalysisUserGuide.aux) ) 
+ <./wasplightcurve.pdf>] [13 <./comp1r.pdf> <./comp2r.pdf
+
+pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./comp2r.pdf): PDF inclusion
+: multiple pdfs with page group included in a single page
+> <./comp3r.pdf
+
+pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./comp3r.pdf): PDF inclusion
+: multiple pdfs with page group included in a single page
+> <./excountout.png> <./exmagout.png>] (./STEPUPImageAnalysisUserGuide.aux) ) 
 Here is how much of TeX's memory you used:
  2831 strings out of 492995
  40809 string characters out of 6132704
@@ -354,20 +357,20 @@ Here is how much of TeX's memory you used:
  11481 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,8n,37p,918b,378s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local
-/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
-texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on STEPUPImageAnalysisUserGuide.pdf (14 pages, 852289 bytes).
+</
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on STEPUPImageAnalysisUserGuide.pdf (14 pages, 896243 bytes).
 PDF statistics:
- 177 PDF objects out of 1000 (max. 8388607)
- 83 compressed objects within 1 object stream
+ 306 PDF objects out of 1000 (max. 8388607)
+ 99 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
