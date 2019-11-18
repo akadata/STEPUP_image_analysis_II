@@ -318,7 +318,7 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
         plt.xlabel("Time [JD]")
         plt.gca().invert_yaxis()
         plt.title("Comp {}, {} = {} mag".format(i + 1, fil, mag))
-        plt.savefig("comp_{}_{}.png".format(i + 1, fil))
+        plt.savefig("comp_{}_{}.pdf".format(i + 1, fil))
         plt.legend()
         plt.show()
 
