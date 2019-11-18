@@ -23,10 +23,10 @@ SIA_II uses [Astrometry.net](http://astrometry.net/) and [WCSTools software pack
 SIA outputs plots that depict the behavior of comarison stars, the target's light curve behavior, and a summary of image centroiding. In addition to this, SIA outputs data files with absolute and net count values of the target star for each image. Examples of plots can be seen below and in the SIA user manual.
 
 Target light curve:
-<img src="https://github.com/helenarichie/STEPUP_image_analysis_II/blob/master/user_manual/wasplightcurve.pdf" alt="lc" width="200"/>
+<img src="https://github.com/helenarichie/STEPUP_image_analysis_II/blob/master/user_manual/wasplightcurve.png" alt="lc" width="200"/>
 
 Centroid corrections:
-<img src="https://github.com/helenarichie/STEPUP_image_analysis_II/blob/master/user_manual/centroid.pdf" alt="centroid" width="200"/>
+<img src="https://github.com/helenarichie/STEPUP_image_analysis_II/blob/master/user_manual/centroid.png" alt="centroid" width="200"/>
 
 Unscaled comparison star magnitudes:
-<img src="https://github.com/helenarichie/STEPUP_image_analysis_II/blob/master/user_manual/comp1r.pdf" alt="complc" width="200"/>
+<img src="https://github.com/helenarichie/STEPUP_image_analysis_II/blob/master/user_manual/comp1r.png" alt="complc" width="200"/>
