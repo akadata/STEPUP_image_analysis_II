@@ -20,4 +20,3 @@
 #FUNCTIONS=PHOT
 
 *Last four rows do not need to be specified.
-*I didn't write the part where it checks for dircalib and dirdark, but I am going to define a Boolean that corresponds to whether or not they're the same.
