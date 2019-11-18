@@ -313,7 +313,7 @@ def counts_to_mag(aper_sum, comp_aper_sums, err, comp_mags, check_aper_sum,
 
     for i, (obj, mag) in enumerate(zip(comp_aper_sums, comp_mags)):
         figure = plt.figure(figsize=(10,8))
-        plt.plot(date_obs, 2.5 * np.log10(obj), "o", c='cadetblue', label='STEPUP {}'.format(fil))
+        plt.plot(date_obs, 2.5 * np.log10(obj), "o", c='cadetblue', label='{}'.format(fil))
         plt.ylabel("Instrumental Magnitude")
         plt.xlabel("Time [JD]")
         plt.gca().invert_yaxis()
@@ -391,13 +391,13 @@ def mag_plot(target_mags, target_err, date_obs, target, date, fil, dirtarget,
     f, axarr = plt.subplots(2, sharex=True,
                             gridspec_kw={'height_ratios': [3, 1]},
                             figsize=(10, 8))
-    axarr[0].errorbar(date_obs, target_mags, yerr=target_err, fmt='o', c='cadetblue', label='STEPUP {}'.format(fil))
+    axarr[0].errorbar(date_obs, target_mags, yerr=target_err, fmt='o', c='cadetblue', label='{}'.format(fil))
     axarr[0].set_title('Light Curve of {}, {}'.format(target, date))
     axarr[0].set_ylabel('Magnitude')
     axarr[0].invert_yaxis
     axarr[0].legend()
     axarr[0].set_ylim(axarr[0].get_ylim()[::-1])
-    axarr[1].scatter(date_obs, check_mags, c='cadetblue', label='STEPUP {}'.format(fil))
+    axarr[1].scatter(date_obs, check_mags, c='cadetblue', label='{}'.format(fil))
     axarr[1].set_ylim(axarr[1].get_ylim()[::-1])
     axarr[1].invert_yaxis
     axarr[1].legend()
