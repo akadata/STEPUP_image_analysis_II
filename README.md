@@ -9,10 +9,10 @@ This respository contains the SIA pipeline and a user manual written explicity f
 
 ## Installation
 To run SIA_II, user must have Python 3 with standard libraries and the following Python packages: 
--Matplotlib
--NumPy
--AstroPy
--PhotUtils
+--Matplotlib
+--NumPy
+--AstroPy
+--PhotUtils
 
 Additionally, the user must install and compile the [WCSTools software package](http://tdc-www.harvard.edu/wcstools/) and add the executables to their device's `PATH`.
 
