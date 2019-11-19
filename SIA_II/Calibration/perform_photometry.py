@@ -123,7 +123,7 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec,
     ----------
     dirtarget : str
         Directory containing all bias, flat, and raw science images.
-    filters : list
+    fil : list
         List containing string of each filter keyword found in header of flat
         field and light frame images.
     coords : list
@@ -152,9 +152,9 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec,
     -------
     aper_sum : numpy.ndarray
         Array of aperture sums for target star in counts.
-    comp_aper_sums : numpy.ndarray
+    comp_apers : numpy.ndarray
         Filtered array of comparison star magnitudes.
-    check_aper_sum : numpy.ndarray
+    check_apers : numpy.ndarray
         Filtered array of aperture sum for check star in counts.
     err : numpy.ndarray
         Array of error values for each aperture sum of the target star in
@@ -163,7 +163,7 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec,
         Array of times each image was taken in Julian Days.
     altitudes : np.ndarray
         Array of object altitudes for each image.
-    final_comp_mags : numpy.ndarray
+    comp_mags : numpy.ndarray
         Filtered array of comparison star magnitudes.
     saturated : list
         List of string of image paths that have objects in them that are at the
@@ -186,17 +186,26 @@ def photometry(dirtarget, fil, coords, comp_ra, comp_dec, cra, cdec,
     check_aper_sum = np.array(check_aper_sum, dtype=float)
     check_aper_sum = check_aper_sum[0]
 
-    # Determine if any of the comparison stars are not in the image.
+    # To determine if any of the comparison stars are not in the image, the
+    # comp_apers arrays are individually checked for NaN and negative values.
+    # If an array contains a negative value, the the total number of images
+    # containing negative numbers is considered before ruling out the star
+    # completely.
     good_comp = []
+    print(comp_apers)
     for i, o_aper in enumerate(comp_apers):
         no_nan = (len(np.argwhere(np.isnan(o_aper))) == 0)
         no_neg = (len(np.where(o_aper <= 0)[0]) == 0)
+        if not no_neg:
+            where_neg = np.where(o_aper < 0)[0]
+            if len(where_neg) < (0.25 * len(o_aper)):
+                no_neg = True
         if no_nan and no_neg:
             good_comp.append(i)
     comp_apers = np.array([comp_apers[i] for i in good_comp])
     comp_mags = np.array([comp_mags[i] for i in good_comp])
 
-    # Remove any bad data points.
+    # Remove any bad images from analysis.
     good_im = []
     good_im.extend(np.where(aper_sum != np.nan)[0])
     good_im.extend(np.where(aper_sum > 0)[0])
@@ -235,9 +244,17 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
         Array of aperture sums for target star in counts.
     check_aper_sum : numpy.ndarray
         Filtered array of aperture sum for check star in counts.
-    err : numpy.ndarray
+    t_err : numpy.ndarray
         Array of error values for each aperture sum of the target star in
         counts.
+    date_obs : np.ndarray
+        Array of times each image was taken in Julian Days.
+    altitudes : np.ndarray
+        Array of object altitudes for each image.
+    target : str
+        Name of target.
+    clabel : str
+        Name of check star.
 
     Returns
     -------
@@ -260,7 +277,7 @@ def write_net_counts(dirtarget, fil, date, comp_aper_sums, aper_sum,
                                                                t_err,
                                                                check_aper_sum,
                                                                altitudes)):
-            if tsum != np.nan:
+            if not np.isnan(tsum):
                 csums = comp_sums[n]
                 zenith = np.deg2rad(90 - alt)
                 airmass = 1 / np.cos(zenith)
@@ -361,9 +378,8 @@ def mag_plot(target_mags, target_err, date_obs, target, date, fil, dirtarget,
 
     Creates a subplot with the target magntidues and their error over time in
     Julian Days on top and the check star magnitudes on the bottom with the
-    same x-axis as the target star. A PDF of the lightcurve is written to
-    /home/depot/STEPUP/raw/<name-of-target>/<date-of-observation>/ISR_Images/
-    <filter-name>/WCS/accurate_WCS.
+    same x-axis as the target star. A PDF of the lightcurve is written to the
+    location of the ISR, plate-solved dataset.
 
     Parameters
     ----------
@@ -455,11 +471,12 @@ def write_file(target_mags, target_err, date_obs, target, dirtarget, fil,
                 'AIRMASS\n')
         for date_i, mag, err, cmag, alt in zip(date_obs, target_mags,
                                                target_err, cmags, altitudes):
-            zenith = np.deg2rad(90 - alt)
-            airmass = 1 / np.cos(zenith)
-            input_list = [target, date_i, mag, err, fil, clabel, cmag, airmass]
-            input_string = ",".join(map(str, input_list))
-            f.write(input_string + '\n')
+            if not np.isnan(mag):
+                zenith = np.deg2rad(90 - alt)
+                airmass = 1 / np.cos(zenith)
+                input_list = [target, date_i, mag, err, fil, clabel, cmag, airmass]
+                input_string = ",".join(map(str, input_list))
+                f.write(input_string + '\n')
         f.close()
 
 
@@ -501,6 +518,10 @@ def get_counts(dirtarget, rightascension, declination, fil, set_rad, aper_rad,
         User-specified annulus inner radius in arcseconds.
     ann_out_rad : float
         User-specified annulus outer radius in arcseconds.
+    name : str
+        Type of star that get_counts is being ran on (e.g. target, comp, check).
+    centroid_plt : Boolean
+        Whether or not to plot centroid shifts for object.
 
     Returns
     -------

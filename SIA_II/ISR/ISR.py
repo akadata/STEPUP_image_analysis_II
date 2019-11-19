@@ -59,8 +59,11 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
     # Retrieves all FITS files from dirtarget and dark frames from dirdark.
     t_files = sorted(glob.glob(os.path.join(dirtarget, '*.fit')))
     d_files = sorted(glob.glob(os.path.join(dirdark, '*.fit')))
-    os.mkdir(dirtarget + '/mcalib')
-    os.mkdir(dirtarget + '/ISR_Images')
+    try:
+        os.mkdir(dirtarget + '/mcalib')
+        os.mkdir(dirtarget + '/ISR_Images')
+    except FileExistsError:
+        pass
 
     biases = []
     bias_prihdr = None
@@ -110,7 +113,7 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
 def get_filtered_calibimages(dirtarget):
     """Creates and saves master flat for each filter.
 
-    Creates a list of all unique filter names on flat and light images. It then
+    Creates a list of all unique filter names on flat and light images. Then
     loops through that list looking for all flatswith the same filter name for
     each iteration of the loop. It then subtracts the bias and normalizes each
     individual flat and averages that array. The master flat is then saved as
@@ -197,9 +200,6 @@ def instrument_signature_removal(dirtarget, target, image_filters):
         Directory containing all bias, flat, and raw science images.
     target : str
         Name of target.
-    exptime : dict
-        Dictionary containing the image exposure time for each filter used in
-        observation in seconds.
     image_filters : list
         List containing string of each filter keyword found in header of flat
         field and light frame images.

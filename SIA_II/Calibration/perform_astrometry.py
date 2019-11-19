@@ -61,7 +61,10 @@ def perform_astrometry(target, dirtarget, filters, verbose=False):
 
     for fil in filters:
         os.chdir(dirtarget)
-        os.mkdir(os.path.join(dirtarget, fil, 'WCS'))
+        try:
+            os.mkdir(os.path.join(dirtarget, fil, 'WCS'))
+        except FileExistsError:
+            pass
         # Reads in ISR images of filter being processed sorted by path name.
         images = sorted(glob.glob(os.path.join(dirtarget, fil, '*.fits')))
         # Copies new-image.tab to WCS folder for images of filter being
@@ -113,7 +116,10 @@ def perform_astrometry(target, dirtarget, filters, verbose=False):
         # Moves corrected images to separate directory.
         isr_wcs_images = sorted(glob.glob(os.path.join(dirtarget, fil, 'WCS',
                                                        '*w.fits')))
-        os.mkdir(os.path.join(dirtarget, fil, 'WCS', 'accurate_WCS'))
+        try:
+            os.mkdir(os.path.join(dirtarget, fil, 'WCS', 'accurate_WCS'))
+        except FileExistsError:
+            pass
         out_path = os.path.join(dirtarget, fil, 'WCS', 'accurate_WCS')
         for image in isr_wcs_images:
             move(image, out_path)
