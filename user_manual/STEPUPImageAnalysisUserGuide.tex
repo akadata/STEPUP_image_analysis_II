@@ -92,7 +92,7 @@ The preliminary steps to running SIA depend on the location at which it is being
 \section{Creating Input File (General)}
 \label{sect:inputfile}
 \begin{enumerate}
-\item A template for the SIA input file is located in the SIA directory. Copy the input file template to the target directory by typing {\bf copy $\langle$Path to input file$\rangle$ $\langle$Path to target directory$\rangle$}.
+\item A template for the SIA input file is located in the SIA GitHub repository. Copy the input file template to the target directory by typing {\bf copy $\langle$Path to input file$\rangle$ $\langle$Path to target directory$\rangle$}.
 \item Make sure you are {\bf cd}'ed into the target's directory by typing \textbf{chdir} and identifying the last directory in the path as the target directory. Once confirmed, type the command {\bf gedit input-file.txt} for Linux or {\bf notepad input-file.txt} for Windows. Now you will begin editing the file.
 \item First, enter the absolute file paths for the dark calibration files in the {\bf DIRDARK} keyword. The reason there is a separate keyword for the dark calibration images is because it is common that darks are not taken on the same night as flats and biases. Therefore, these may or may not be stored in the same location as your other calibration files. If they are stored in the same directory as the other calibration files (in the target directory), just leave this entry blank.
 \item Go through the file and input all of the parameters that you're immediately aware of. These should include {\bf DATE, TARGET, RA} and {\bf DEC}. the {\bf RA, DEC} keywords correspond to the J2000 RA and Dec of the target.
