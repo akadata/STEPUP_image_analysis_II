@@ -1,4 +1,4 @@
-# STEPUP_image_analysis_II 
+# STEPUP Image Analysis 
 
 <img src="https://github.com/helenarichie/helenarichie/blob/master/images/STEPUP_logo.png" alt="logo" width="200"/>
 
