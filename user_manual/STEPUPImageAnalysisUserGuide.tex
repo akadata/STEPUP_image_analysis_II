@@ -55,7 +55,7 @@ Professor David Turnshek
 \chapter{Introduction}
 \parindent0pt
 
-This user's manual provides easy-to-follow instructions on how to run STEPUP Image Analysis (SIA) to generate light curves. SIA was originally written with the intention of generating exoplanet transit light curves for the STEPUP team, however, the program is now generalized to any system which exhibits variations in flux over time. \\
+This user's manual provides easy-to-follow instructions on how to run STEPUP Image Analysis (SIA) to generate light curves. SIA was originally written with the intention of generating exoplanet transit light curves for the STEPUP team, however, the program is now generalized to extract light curves from photometric data of any astronomical phenomena. \\
 
 This version of SIA was developed for use in ASTRON 1263. This code has been installed at various locations of use by Pitt's physics students. These locations include the lab room at Allegheny Observatory, the computers in Thaw 210, and the computers in Allen 302. This manual provides separate sections for each of these locations and corresponding instructions on how to run SIA.\\
 
@@ -80,7 +80,7 @@ The preliminary steps to running SIA depend on the location at which it is being
 \begin{enumerate}
 \item All data must be stored in the same directory that is given as input when you run SIA. This includes raw data files, calibration images (including biases, flats, and darks), and the input-file.txt, which the next section explains how to create. {\bf Note:} the dark calibration files \emph{can} be stored in a separate location, but that must be indicated as described in the next section.
 \item There are templates for the input file on every computer SIA is installed on. Directions for copying the files are given at the beginning of each location-specific preliminary setup section. It is also quite easy to create one yourself by creating a new text file and filling it in to match Figure \ref{fig:inputfile}.
-\item For reference, here is a list of all of the files you need in your raw data directory in order for SIA to run:  \label{itm:filelist}
+\item For reference, here is a list of all of the files that you need in your raw data directory in order for to run the entirety of SIA:  \label{itm:filelist}
 	\begin{enumerate}
 		\item Raw target data.
 		\item Three types of calibration files (flats, biases, and darks).
@@ -93,7 +93,7 @@ The preliminary steps to running SIA depend on the location at which it is being
 \label{sect:inputfile}
 \begin{enumerate}
 \item A template for the SIA input file is located in the SIA GitHub repository. Copy the input file template to the target directory by typing {\bf copy $\langle$Path to input file$\rangle$ $\langle$Path to target directory$\rangle$}.
-\item Make sure you are {\bf cd}'ed into the target's directory by typing \textbf{chdir} and identifying the last directory in the path as the target directory. Once confirmed, type the command {\bf gedit input-file.txt} for Linux or {\bf notepad input-file.txt} for Windows. Now you will begin editing the file.
+\item Make sure you are {\bf cd}'ed into the target's directory by typing \textbf{cd} and entering the target directory. Once confirmed, type the command {\bf gedit input-file.txt} for Linux or {\bf notepad input-file.txt} for Windows. Now you will begin editing the file.
 \item First, enter the absolute file paths for the dark calibration files in the {\bf DIRDARK} keyword. The reason there is a separate keyword for the dark calibration images is because it is common that darks are not taken on the same night as flats and biases. Therefore, these may or may not be stored in the same location as your other calibration files. If they are stored in the same directory as the other calibration files (in the target directory), just leave this entry blank.
 \item Go through the file and input all of the parameters that you're immediately aware of. These should include {\bf DATE, TARGET, RA} and {\bf DEC}. the {\bf RA, DEC} keywords correspond to the J2000 RA and Dec of the target.
 \item Now that you have completed all of the immediately known entries, you must determine {\bf COMPMAGS, COMPRA, COMPDEC, CLABEL, CRA, CDEC, RLABEL, RRA} and {\bf RDEC}. First, try finding this information in a Variable Star Chart on \emph{aavso.org} by following the next few steps. If you find that a Variable Star Chart does not exist for your target, skip to Step \ref{itm:novsp} and use Aladin Lite to find this information.
