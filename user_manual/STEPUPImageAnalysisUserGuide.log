@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  7 FEB 2020 08:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  7 FEB 2020 17:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -78,56 +78,6 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/adjustbox/adjustbox.sty
-Package: adjustbox 2012/05/21 v1.0 Adjusting TeX boxes (trim, clip, ...)
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
-
-(/usr/local/texlive/2017/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(/usr/local/texlive/2017/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks15
-\XKV@tempa@toks=\toks16
-)
-\XKV@depth=\count89
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/adjustbox/adjcalc.sty
-Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
--ends (calc, etex, pgfmath)
-)
-(/usr/local/texlive/2017/texmf-dist/tex/latex/adjustbox/trimclip.sty
-Package: trimclip 2012/05/16 v1.0 Trim and clip general TeX material
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/collectbox/collectbox.sty
-Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
-\collectedbox=\box26
-)
-\tc@llx=\dimen105
-\tc@lly=\dimen106
-\tc@urx=\dimen107
-\tc@ury=\dimen108
-Package trimclip Info: Using driver 'tc-pdftex.def'.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
-File: tc-pdftex.def 2012/05/13 v1.0 Clipping driver for pdftex
-))
-\adjbox@Width=\dimen109
-\adjbox@Height=\dimen110
-\adjbox@Depth=\dimen111
-\adjbox@Totalheight=\dimen112
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
-Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count90
-)
-(/usr/local/texlive/2017/texmf-dist/tex/latex/varwidth/varwidth.sty
-Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box27
-\sift@deathcycles=\count91
-\@vwid@loff=\dimen113
-\@vwid@roff=\dimen114
-))
 (./STEPUPImageAnalysisUserGuide.aux)
 \openout1 = `STEPUPImageAnalysisUserGuide.aux'.
 
@@ -146,17 +96,17 @@ LaTeX Font Info:    ... okay on input line 17.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count92
-\scratchdimen=\dimen115
-\scratchbox=\box28
-\nofMPsegments=\count93
-\nofMParguments=\count94
-\everyMPshowfont=\toks17
-\MPscratchCnt=\count95
-\MPscratchDim=\dimen116
-\MPnumerator=\count96
-\makeMPintoPDFobject=\count97
-\everyMPtoPDFconversion=\toks18
+\scratchcounter=\count89
+\scratchdimen=\dimen105
+\scratchbox=\box26
+\nofMPsegments=\count90
+\nofMParguments=\count91
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count92
+\MPscratchDim=\dimen106
+\MPnumerator=\count93
+\makeMPintoPDFobject=\count94
+\everyMPtoPDFconversion=\toks16
 ) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -286,7 +236,11 @@ nclusion: found PDF version <1.7>, but at most version <1.5> allowed
 File: SIA_flow_chart.pdf Graphic file (type pdf)
  <use SIA_flow_chart.pdf>
 Package pdftex.def Info: SIA_flow_chart.pdf used on input line 180.
-(pdftex.def)             Requested size: 610.6829pt x 395.15501pt.
+(pdftex.def)             Requested size: 516.73335pt x 334.3582pt.
+
+Overfull \hbox (46.97836pt too wide) in paragraph at lines 180--181
+ [] 
+ []
 
 [9
 
@@ -299,31 +253,31 @@ Chapter 5.
 <wasplightcurve.pdf, id=78, 722.7pt x 578.16pt>
 File: wasplightcurve.pdf Graphic file (type pdf)
  <use wasplightcurve.pdf>
-Package pdftex.def Info: wasplightcurve.pdf used on input line 254.
+Package pdftex.def Info: wasplightcurve.pdf used on input line 252.
 (pdftex.def)             Requested size: 243.90623pt x 195.13098pt.
 
 <comp1r.pdf, id=79, 722.7pt x 578.16pt>
 File: comp1r.pdf Graphic file (type pdf)
  <use comp1r.pdf>
-Package pdftex.def Info: comp1r.pdf used on input line 261.
+Package pdftex.def Info: comp1r.pdf used on input line 259.
 (pdftex.def)             Requested size: 150.32503pt x 120.26149pt.
 
 <comp2r.pdf, id=80, 722.7pt x 578.16pt>
 File: comp2r.pdf Graphic file (type pdf)
  <use comp2r.pdf>
-Package pdftex.def Info: comp2r.pdf used on input line 265.
+Package pdftex.def Info: comp2r.pdf used on input line 263.
 (pdftex.def)             Requested size: 150.32503pt x 120.26149pt.
 
 <comp3r.pdf, id=81, 722.7pt x 578.16pt>
 File: comp3r.pdf Graphic file (type pdf)
  <use comp3r.pdf>
-Package pdftex.def Info: comp3r.pdf used on input line 269.
+Package pdftex.def Info: comp3r.pdf used on input line 267.
 (pdftex.def)             Requested size: 150.32503pt x 120.26149pt.
 
 <excountout.png, id=82, 1294.8375pt x 412.54124pt>
 File: excountout.png Graphic file (type png)
  <use excountout.png>
-Package pdftex.def Info: excountout.png used on input line 278.
+Package pdftex.def Info: excountout.png used on input line 276.
 (pdftex.def)             Requested size: 347.04231pt x 110.5719pt.
 
 
@@ -332,7 +286,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <exmagout.png, id=83, 931.48pt x 362.35374pt>
 File: exmagout.png Graphic file (type png)
  <use exmagout.png>
-Package pdftex.def Info: exmagout.png used on input line 284.
+Package pdftex.def Info: exmagout.png used on input line 282.
 (pdftex.def)             Requested size: 284.23601pt x 110.5719pt.
 
 
@@ -350,13 +304,13 @@ pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./comp3r.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
 > <./excountout.png> <./exmagout.png>] (./STEPUPImageAnalysisUserGuide.aux) ) 
 Here is how much of TeX's memory you used:
- 2831 strings out of 492995
- 40809 string characters out of 6132704
- 111514 words of memory out of 5000000
- 6332 multiletter control sequences out of 15000+600000
+ 2106 strings out of 492995
+ 29138 string characters out of 6132704
+ 97713 words of memory out of 5000000
+ 5642 multiletter control sequences out of 15000+600000
  11481 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,8n,37p,918b,378s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,8n,35p,918b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
 </
 usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
@@ -367,7 +321,7 @@ sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
 ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
 cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loc
 al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on STEPUPImageAnalysisUserGuide.pdf (14 pages, 896249 bytes).
+Output written on STEPUPImageAnalysisUserGuide.pdf (14 pages, 896339 bytes).
 PDF statistics:
  306 PDF objects out of 1000 (max. 8388607)
  99 compressed objects within 1 object stream
