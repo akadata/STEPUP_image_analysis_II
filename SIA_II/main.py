@@ -126,7 +126,6 @@ def main():
         # input-file.txt file if user is not running SIA interactively.
         for function in functions:
             answer = function.lower()
-            print(answer)
             which_analysis(interactive, answer, target, date, filters, coords,
                            dirtarget, dirdark, comp_mags, comp_ra, comp_dec,
                            clabel, cra, cdec, set_rad, aper_rad, ann_in_rad,
