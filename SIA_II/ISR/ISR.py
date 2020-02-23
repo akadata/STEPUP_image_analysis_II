@@ -73,6 +73,7 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
 
     # Retrieves all bias frames and creates master bias.
     for o_file in t_files:
+        print(o_file)
         hdulist = fits.open(o_file)
         if hdulist[0].header['IMAGETYP'] == 'Bias Frame':
             biases.append(fits.getdata(o_file))
