@@ -106,10 +106,11 @@ def perform_astrometry(target, dirtarget, filters, verbose=False):
         # Corrects WCS information so that it is specific to image being
         # processed using the imwcs command from WCSTools.
         for i, image in enumerate(isr_wcs_images):
+            
             if verbose:
                 pass
             else:
-                subprocess.call(['imwcs', '-w', '-i', '100', '-c',
+                subprocess.call(['imwcs', '-w', '-i', '100', '-t', '100', '-c',
                                  'new-image.tab', target + '_' + fil +
                                  '_{}.fits'.format(numbers[i+1])])
 

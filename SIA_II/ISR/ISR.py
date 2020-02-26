@@ -2,6 +2,7 @@ import os
 import glob
 from astropy.io import fits
 import numpy as np
+import sys
 
 
 def ISR_main(dirtarget, dirdark, target):
@@ -59,6 +60,13 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
     # Retrieves all FITS files from dirtarget and dark frames from dirdark.
     t_files = sorted(glob.glob(os.path.join(dirtarget, '*.fit')))
     d_files = sorted(glob.glob(os.path.join(dirdark, '*.fit')))
+    if len(t_files) == 0:
+        print('\nNo FITS files found. Ensure that they are saved in your target directory and try again.')
+        sys.exit()
+    if len(d_files) == 0:
+        print('\nNo FITS files found. Ensure that they are saved in your target directory and try again.')
+        sys.exit()
+
     try:
         os.mkdir(dirtarget + '/mcalib')
         os.mkdir(dirtarget + '/ISR_Images')
@@ -70,14 +78,21 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
     darks = []
     dark_prihdr = None
     dark_exptime = None
+    bias = False
+    dark = False
 
     # Retrieves all bias frames and creates master bias.
     for o_file in t_files:
         hdulist = fits.open(o_file)
         if hdulist[0].header['IMAGETYP'] == 'Bias Frame':
+            bias = True
             biases.append(fits.getdata(o_file))
             bias_prihdr = hdulist[0].header
         hdulist.close()
+
+    if not bias:
+        print('\nBias frame calibration file not found. Ensure that they are in your target directory and try again.')
+        sys.exit()
 
     bias_array = np.array(biases, dtype=float)
 
@@ -86,7 +101,7 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
     # Saves master bias to mcalib.
     hdu = fits.PrimaryHDU(mbias_array, header=bias_prihdr)
     hdulist = fits.HDUList([hdu])
-    hdulist.writeto(dirtarget + '/mcalib/mbias.fits')
+    hdulist.writeto(dirtarget + '/mcalib/mbias.fits', overwrite=True)
 
     # Retrieves all dark frames from dirdark as well as .
     for o_file in d_files:
@@ -95,6 +110,11 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
             darks.append(fits.getdata(o_file))
             dark_exptime = hdulist[0].header['EXPTIME']
             dark_prihdr = hdulist[0].header
+            dark = True
+
+    if not dark:
+        print('\nDark frame calibration files not found. Ensure that they are in your target directory or that their location was entered correctly in the input file and try again.')
+        sys.exit()
 
     dark_array = np.array(darks, dtype=float)
 
@@ -150,11 +170,16 @@ def get_filtered_calibimages(dirtarget):
     for o_file in files:
         hdulist = fits.open(o_file)
         if (hdulist[0].header['IMAGETYP'] == 'Flat Field' or
-                hdulist[0].header['IMAGETYP'] == 'Light Frame'):
+            hdulist[0].header['IMAGETYP'] == 'Light Frame'):
             image_filters.add(hdulist[0].header['FILTER'])
-        hdulist.close()
+            hdulist.close()
+
+    if len(image_filters) == 0:
+        print('\nEither no light frame or flat field calibration files found. Ensure that they are saved in your target directory and try again.')
+        sys.exit()
 
     for i in image_filters:
+        flat = False
         flats = []
         flat_prihdr = None
         # Retrieves flats with the same filter name.
@@ -162,9 +187,14 @@ def get_filtered_calibimages(dirtarget):
             hdulist = fits.open(o_file)
             if (hdulist[0].header['IMAGETYP'] == 'Flat Field' and
                     hdulist[0].header['FILTER'] == i):
+                flat = True
                 flats.append(fits.getdata(o_file))
                 flat_prihdr = hdulist[0].header
             hdulist.close()
+
+        if not flat:
+            print('\n{} flat field calibration files not found. Ensure that they are in your target directory and try again.'.format(i))
+            sys.exit()
 
         flat_array = np.array(flats, dtype=float)
 
