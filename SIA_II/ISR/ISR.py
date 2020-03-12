@@ -60,11 +60,12 @@ def get_unfiltered_calibimages(dirtarget, dirdark):
     # Retrieves all FITS files from dirtarget and dark frames from dirdark.
     t_files = sorted(glob.glob(os.path.join(dirtarget, '*.fit')))
     d_files = sorted(glob.glob(os.path.join(dirdark, '*.fit')))
+
     if len(t_files) == 0:
         print('\nNo FITS files found. Ensure that they are saved in your target directory and try again.')
         sys.exit()
     if len(d_files) == 0:
-        print('\nNo FITS files found. Ensure that they are saved in your target directory and try again.')
+        print('\nNo dark calibration files found. Ensure that they are saved in your dark directory and try again.')
         sys.exit()
 
     try:

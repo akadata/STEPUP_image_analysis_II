@@ -204,7 +204,7 @@ def which_analysis(interactive, answer, target, date, filters, coords,
                          os.path.join(dirtarget, 'ISR_Images/new-image.fits'))
             im = 'y'
         except FileNotFoundError:
-            print('\nnew-image.fits not found in raw data directory. Goodbye.')
+            print('\nnew-image.fits not found in raw data directory. Try again.')
 
         # Determines if user has saved new-image.fits WCS calibration file to
         # ISR_Images directory that was created in ISR function.
